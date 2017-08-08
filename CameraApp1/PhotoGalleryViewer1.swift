@@ -35,21 +35,20 @@ class PhotoGalleryViewer1: UIViewController {
         // Register cell classes
         
         // Do any additional setup after loading the view.
-        loadImages()
-
-    }
-    
-    //    private func load(fileName: String) -> UIImage? {
-    func loadImages() {
-        let fileURL = docsurl.appendingPathComponent(pathname)
-        do {
-            let imageData = try Data(contentsOf: fileURL)
+        
+        
+        for fileName in items {
+            
+            print(fileName)
+            let fileURL = URL(string: fileName, relativeTo: myurl)!
+            let imageData = try! Data(contentsOf: fileURL)
             let image1 = UIImage(data: imageData)
             images.append(image1!)
-            self.collectionView.reloadData()
-        } catch {
-            print("Error loading image : \(error)")
+
+            
         }
+        self.collectionView.reloadData()
+
     }
     
     override func didReceiveMemoryWarning() {

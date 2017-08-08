@@ -102,11 +102,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CameraApp1/savePhotoFolders.swift"
-            timestampString = "523868310.889726"
+            timestampString = "523873585.288589"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "97"
-            endingLineNumber = "97"
+            startingLineNumber = "169"
+            endingLineNumber = "169"
             landmarkName = "createTextAlert(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -118,77 +118,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CameraApp1/savePhotoFolders.swift"
-            timestampString = "523868317.055724"
+            timestampString = "523873585.76124"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "131"
-            endingLineNumber = "131"
-            landmarkName = "saveImageToDocumentDirectory(_:)"
+            startingLineNumber = "150"
+            endingLineNumber = "150"
+            landmarkName = "saveMyImageToDocumentDirectory(_:)"
             landmarkType = "9">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "CameraApp1.savePhotoFolders.createTextAlert (Any) -&gt; ()"
-                  moduleName = "CameraApp1"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/rajitapujare/Desktop/CameraApp1/CameraApp1/savePhotoFolders.swift"
-                  timestampString = "523869211.165011"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "167"
-                  endingLineNumber = "167"
-                  offsetFromSymbolStart = "796">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "CameraApp1.savePhotoFolders.(createTextAlert (Any) -&gt; ()).(closure #1)"
-                  moduleName = "CameraApp1"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/rajitapujare/Desktop/CameraApp1/CameraApp1/savePhotoFolders.swift"
-                  timestampString = "523869211.168388"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "167"
-                  endingLineNumber = "167"
-                  offsetFromSymbolStart = "3652">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "CameraApp1/savePhotoFolders.swift"
-            timestampString = "523868350.57284"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "82"
-            endingLineNumber = "82"
-            landmarkName = "createTextAlert(_:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "CameraApp1/HeadTimePhotoViewer.swift"
-            timestampString = "523868637.972905"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "116"
-            endingLineNumber = "116"
-            landmarkName = "prepare(for:sender:)"
-            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

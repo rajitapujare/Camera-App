@@ -115,7 +115,7 @@ class HeadTimePhotoViewer: UITableViewController {
                 // get the label text to pass to destinationController
                 let text2 = cell?.textLabel?.text
                 
-                let path = "/headAndNeck/\(name2)/" + text2!;
+                let path = "headAndNeck/\(name2)/" + text2!;
 
                 let destinationController = segue.destination as! PhotoGalleryViewer1
 
