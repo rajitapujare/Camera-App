@@ -93,8 +93,12 @@ class savePhotoFolders: UITableViewController, UIAlertViewDelegate {
                             } catch {
                                 print("Error creating /headAndNeck/\(input) folder in documents dir: \(error)")
                 }
-
-                let  newDirectoryPath2 = newDirectoryPath1.appending("/\(self.timestamp)")
+                
+                let double = Double(self.timestamp)
+                let date2 = (Date(timeIntervalSince1970: double!))
+                let date3 = "\(date2)"
+                
+                let  newDirectoryPath2 = newDirectoryPath1 + "/" + date3;
                 do {
                     try fileManager.createDirectory(atPath: newDirectoryPath2,
                                                     withIntermediateDirectories: true,
@@ -124,22 +128,26 @@ class savePhotoFolders: UITableViewController, UIAlertViewDelegate {
                         print("Error creating /headAndNeck/\(input) folder in documents dir: \(error)")
                 }
  
-                let  newDirectoryPath2 = newDirectoryPath1?.appending("/\(self.timestamp)")
+                let double = Double(self.timestamp)
+                let date2 = (Date(timeIntervalSince1970: double!))
+                let date3 = "\(date2)"
+                let  newDirectoryPath2 = (newDirectoryPath1)! + "/" + date3;
+                
                 do {
-                    try self.fm.createDirectory(atPath: newDirectoryPath2!, withIntermediateDirectories: true, attributes: nil)
+                    try self.fm.createDirectory(atPath: newDirectoryPath2, withIntermediateDirectories: true, attributes: nil)
                 } catch {
                     print("Error creating /headAndNeck/\(input)/\(self.timestamp) folder in documents dir: \(error)")
                 }
 
 //                let directoryPath =  NSHomeDirectory().appending("/Documents/headAndNeck/\(input)/\(self.timestamp)")
-                let fileUrl = Foundation.URL(string: newDirectoryPath2!)
+                let fileUrl = Foundation.URL(string: newDirectoryPath2)
 
                 let filename = "/\(self.timestamp)".appending(".jpg")
-                let filepath = newDirectoryPath2?.appending(filename)
+                let filepath = newDirectoryPath2.appending(filename)
                 var urlString: String = fileUrl!.path
 
 
-                let items = try! self.fm.contentsOfDirectory(atPath: newDirectoryPath2!)
+                let items = try! self.fm.contentsOfDirectory(atPath: newDirectoryPath2)
                 print(items)
 
 //                let url = NSURL.fileURL(withPath: filepath)
@@ -150,7 +158,7 @@ class savePhotoFolders: UITableViewController, UIAlertViewDelegate {
                 } catch {
                     print(error)
                     print("file cant not be save at path \(filepath), with error : \(error)");
-                    return filepath!
+                    return filepath
                 }
             }
 

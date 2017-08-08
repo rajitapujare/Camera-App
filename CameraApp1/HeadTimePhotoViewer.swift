@@ -69,21 +69,6 @@ class HeadTimePhotoViewer: UITableViewController {
         
         let items = try! fm.contentsOfDirectory(atPath: urlString)
         
-        
-        let dateFormatter = DateFormatter()
-        dateFormatter.timeStyle = DateFormatter.Style.medium //Set time style
-        dateFormatter.dateStyle = DateFormatter.Style.medium //Set date style
-        dateFormatter.timeZone = TimeZone.current
-        
-        var finaldate1 = [String]()
-        for item in items {
-            let double = Double(item)
-            let date2 = (Date(timeIntervalSince1970: double!))
-            let data3 = "\(date2)"
-            
-            finaldate1.append(data3)
-        }
-
         return items.count
 
     }
@@ -100,21 +85,7 @@ class HeadTimePhotoViewer: UITableViewController {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell2", for: indexPath)
 
-        let dateFormatter = DateFormatter()
-        dateFormatter.timeStyle = DateFormatter.Style.medium //Set time style
-        dateFormatter.dateStyle = DateFormatter.Style.medium //Set date style
-        dateFormatter.timeZone = TimeZone.current
-        
-        var finaldate = [String]()
-        for item in items1 {
-            let double = Double(item)
-            let date2 = (Date(timeIntervalSince1970: double!))
-            let data3 = "\(date2)"
-
-            finaldate.append(data3)
-        }
-
-        cell.textLabel?.text = finaldate[indexPath.row]
+        cell.textLabel?.text = items1[indexPath.row]
         
         return cell
     }
@@ -142,13 +113,9 @@ class HeadTimePhotoViewer: UITableViewController {
                 print(items)
 
                 // get the label text to pass to destinationController
-                let text2 = "\(cell?.textLabel?.text)"
+                let text2 = cell?.textLabel?.text
                 
-                let dateFormatter = DateFormatter()
-                dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss.A"
-                let myDate = dateFormatter.date(from: text2)!
-                let mydate2 = "\(myDate)"
-                let path = "/headAndNeck/\(name2)/\(mydate2)"
+                let path = "/headAndNeck/\(name2)/" + text2!;
 
                 let destinationController = segue.destination as! PhotoGalleryViewer1
 
