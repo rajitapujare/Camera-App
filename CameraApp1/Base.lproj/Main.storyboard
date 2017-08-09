@@ -1154,6 +1154,10 @@
                                                 </imageView>
                                             </subviews>
                                         </view>
+                                        <connections>
+                                            <outlet property="ph" destination="3zN-cb-HYJ" id="jy5-kb-04e"/>
+                                            <segue destination="nkQ-WQ-4RR" kind="show" identifier="enlargepic" id="lr4-Ki-nct"/>
+                                        </connections>
                                     </collectionViewCell>
                                 </cells>
                                 <connections>
@@ -1161,6 +1165,20 @@
                                     <outlet property="delegate" destination="gsl-iE-SuZ" id="eCv-5m-42j"/>
                                 </connections>
                             </collectionView>
+                            <navigationBar contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vrH-fn-Fr4">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                <items>
+                                    <navigationItem id="eeD-N8-yJC">
+                                        <barButtonItem key="leftBarButtonItem" title="Back" id="tSZ-kA-OHG">
+                                            <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <connections>
+                                                <segue destination="1V4-NG-SAs" kind="show" id="HNR-lJ-vjp"/>
+                                            </connections>
+                                        </barButtonItem>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -1176,7 +1194,85 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wCM-Bp-IPP" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3932" y="-1658.3208395802101"/>
+            <point key="canvasLocation" x="4053.5999999999999" y="-1674.5127436281859"/>
+        </scene>
+        <!--Photo Viewer Controller-->
+        <scene sceneID="AFQ-LP-cxN">
+            <objects>
+                <viewController id="nkQ-WQ-4RR" customClass="PhotoViewerController" customModule="CameraApp1" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="GGO-Jp-58b"/>
+                        <viewControllerLayoutGuide type="bottom" id="0yo-kS-Ywc"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="6hE-i5-K2Z">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fQU-d3-x6J">
+                                <rect key="frame" x="0.0" y="623" width="375" height="44"/>
+                                <items>
+                                    <navigationItem id="NA9-3v-ME6">
+                                        <barButtonItem key="leftBarButtonItem" systemItem="trash" id="J41-8R-wxr">
+                                            <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <connections>
+                                                <action selector="deletePhoto:" destination="nkQ-WQ-4RR" id="PHh-CB-4mV"/>
+                                            </connections>
+                                        </barButtonItem>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="u3F-qC-1ya">
+                                <rect key="frame" x="0.0" y="44" width="375" height="579"/>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oCl-lf-3BY">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
+                                <color key="backgroundColor" red="0.9120182966" green="0.9120182966" blue="0.9120182966" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="tintColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="0yy-OF-Cv9"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qWK-D2-cjP">
+                                <rect key="frame" x="16" y="10" width="76" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="76" id="YEL-L2-M2R"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                <state key="normal" title="Back">
+                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <segue destination="gsl-iE-SuZ" kind="show" id="Xz7-rX-xpt"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="u3F-qC-1ya" firstAttribute="trailing" secondItem="fQU-d3-x6J" secondAttribute="trailing" id="3w4-vm-Lt8"/>
+                            <constraint firstItem="qWK-D2-cjP" firstAttribute="leading" secondItem="6hE-i5-K2Z" secondAttribute="leadingMargin" id="4hG-Dp-aL4"/>
+                            <constraint firstItem="oCl-lf-3BY" firstAttribute="leading" secondItem="6hE-i5-K2Z" secondAttribute="leading" id="B5Q-PH-Ud9"/>
+                            <constraint firstItem="fQU-d3-x6J" firstAttribute="bottom" secondItem="0yo-kS-Ywc" secondAttribute="top" id="FWO-vF-tgO"/>
+                            <constraint firstItem="oCl-lf-3BY" firstAttribute="leading" secondItem="u3F-qC-1ya" secondAttribute="leading" id="XK6-rW-A5H"/>
+                            <constraint firstItem="fQU-d3-x6J" firstAttribute="top" secondItem="u3F-qC-1ya" secondAttribute="bottom" id="a4r-di-pSs"/>
+                            <constraint firstItem="qWK-D2-cjP" firstAttribute="top" secondItem="6hE-i5-K2Z" secondAttribute="topMargin" constant="10" id="bBd-Ha-sql"/>
+                            <constraint firstItem="qWK-D2-cjP" firstAttribute="centerY" secondItem="oCl-lf-3BY" secondAttribute="centerY" id="eG6-7Y-i7m"/>
+                            <constraint firstAttribute="trailing" secondItem="oCl-lf-3BY" secondAttribute="trailing" id="r8e-bT-Aq6"/>
+                            <constraint firstItem="u3F-qC-1ya" firstAttribute="top" secondItem="qWK-D2-cjP" secondAttribute="bottom" constant="4" id="wEK-4W-fUI"/>
+                            <constraint firstItem="oCl-lf-3BY" firstAttribute="top" secondItem="6hE-i5-K2Z" secondAttribute="top" id="wFo-fZ-mKZ"/>
+                            <constraint firstItem="u3F-qC-1ya" firstAttribute="leading" secondItem="fQU-d3-x6J" secondAttribute="leading" id="wXR-TQ-NCK"/>
+                            <constraint firstItem="oCl-lf-3BY" firstAttribute="trailing" secondItem="u3F-qC-1ya" secondAttribute="trailing" id="zc3-ZT-73k"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="viewPhoto" destination="u3F-qC-1ya" id="3ht-yI-oUk"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="fmI-da-vxc" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4804" y="-1668.2158920539732"/>
         </scene>
         <!--Table View Controller-->
         <scene sceneID="plH-IQ-Ih5">
@@ -1454,10 +1550,6 @@
                                     <constraint firstItem="RnM-v7-rOj" firstAttribute="centerX" secondItem="VYM-Xl-xyn" secondAttribute="centerX" id="WRC-xB-kbX"/>
                                 </constraints>
                                 <size key="customSize" width="100" height="100"/>
-                                <connections>
-                                    <outlet property="ph" destination="RnM-v7-rOj" id="mU8-Zb-JJE"/>
-                                    <segue destination="07P-8A-630" kind="show" id="NYe-ga-BAc"/>
-                                </connections>
                             </collectionViewCell>
                         </cells>
                         <connections>
@@ -1486,40 +1578,19 @@
         <scene sceneID="dNw-DI-yMf">
             <objects>
                 <viewController id="07P-8A-630" customClass="PhotoViewerController" customModule="CameraApp1" customModuleProvider="target" sceneMemberID="viewController">
-                    <imageView key="view" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="uo4-Nw-Djb">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    </imageView>
-                    <toolbarItems>
-                        <barButtonItem width="313" style="plain" systemItem="fixedSpace" id="8LS-cx-DOi"/>
-                        <barButtonItem systemItem="trash" id="L46-tx-OGy">
-                            <color key="tintColor" red="0.4789102979" green="0.4789102979" blue="0.4789102979" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            <connections>
-                                <action selector="deletePhoto:" destination="07P-8A-630" id="uAN-0H-BSm"/>
-                            </connections>
-                        </barButtonItem>
-                    </toolbarItems>
-                    <navigationItem key="navigationItem" id="ggh-OV-gJ9">
-                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="OLW-XV-IyR">
-                            <color key="tintColor" red="0.16738180050000001" green="0.16738180050000001" blue="0.16738180050000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            <connections>
-                                <action selector="goBack:" destination="07P-8A-630" id="tGk-ER-AuJ"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
-                    <connections>
-                        <outlet property="viewPhoto" destination="uo4-Nw-Djb" id="Lhn-6g-WrJ"/>
-                    </connections>
+                    <toolbarItems/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hem-i1-kna" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5100" y="-583"/>
+            <point key="canvasLocation" x="5604" y="-2075"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="h1Q-Nh-5sE"/>
         <segue reference="ROT-D1-ovD"/>
-        <segue reference="cah-dt-Uyy"/>
+        <segue reference="HNR-lJ-vjp"/>
+        <segue reference="Xz7-rX-xpt"/>
+        <segue reference="OAj-16-HYt"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.89301614419999997" green="1" blue="0.85109981349999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
 </document>

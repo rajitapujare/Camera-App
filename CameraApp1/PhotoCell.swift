@@ -16,8 +16,8 @@ class PhotoCell: UICollectionViewCell {
     }
 
     
-    @IBOutlet weak var ph: UIImageView!
     
+    @IBOutlet weak var ph: UIImageView!
     
     override func prepareForReuse() {
         super.prepareForReuse()

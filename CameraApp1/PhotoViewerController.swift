@@ -10,16 +10,11 @@ import UIKit
 import Photos
 
 class PhotoViewerController: UIViewController {
-    var assetCollection: PHAssetCollection!
-    var photosAsset: PHFetchResult<PHAsset>!
-    var index: Int = 0
 
-    
+    var selectedImage = UIImage()
 
     @IBAction func goBack(_ sender: Any) {
-        if let navController = self.navigationController {
-            navController.popToRootViewController(animated: true)
-        }
+        performSegue(withIdentifier: "goback", sender: self)
 
     }
     
@@ -30,6 +25,8 @@ class PhotoViewerController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        viewPhoto.image = selectedImage
+
 
     }
 

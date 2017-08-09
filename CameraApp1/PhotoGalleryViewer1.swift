@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PhotoGalleryViewer1: UIViewController {
+class PhotoGalleryViewer1: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
     
     
     @IBOutlet weak var collectionView: UICollectionView!
@@ -18,10 +18,14 @@ class PhotoGalleryViewer1: UIViewController {
     }
     let fm = FileManager.default
     var images = [UIImage]()
+    var image = UIImage()
     let docsurl = try! FileManager.default.url(for:.documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        collectionView.dataSource = self;
+        collectionView.delegate = self
+
         let myurl = docsurl.appendingPathComponent("\(pathname)")
         var urlString: String = myurl.path
         
@@ -84,12 +88,19 @@ class PhotoGalleryViewer1: UIViewController {
         let image = images[indexPath.row]
         cell.ph.image = image
         
-        
+
         // Configure the cell
         
         return cell
     }
     
+    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        print("Cell \(indexPath.row) selcted")
+        let selectedCell = collectionView.cellForItem(at: indexPath as IndexPath) as! PhotoCell
+        
+        image = selectedCell.ph.image!
+
+    }
 
     /*
     // MARK: - Navigation
@@ -100,5 +111,31 @@ class PhotoGalleryViewer1: UIViewController {
         // Pass the selected object to the new view controller.
     }
     */
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        // Get the new view controller using segue.destinationViewController.
+        // Pass the selected object to the new view controller.
+        
+        if segue.identifier == "enlargepic" {
+            
+            
+            let cell = sender as! PhotoCell!
 
+            if let indexPath1 = self.collectionView.indexPath(for: cell!) {
+                
+            let cell1 = self.collectionView.cellForItem(at: indexPath1) as! PhotoCell!
+            
+            let image3 = cell1?.ph.image
+                
+            let destination = segue.destination as! PhotoViewerController
+            destination.selectedImage = image3!
+            // returns nil propertyfrom here
+            //destination.navigationController!.setNavigationBarHidden(true, animated: false)
+            
+            }
+        }
+    }
+    
+
+    
+    
 }
