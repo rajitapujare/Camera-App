@@ -10,36 +10,73 @@ import UIKit
 
 class FolderSelector: UITableViewController {
     
+    var buttonClicked = String()
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        // Get the new view controller using segue.destinationViewController.
+        // Pass the selected object to the new view controller.
+        
+        
+        if (segue.identifier == "segue1") {
+            //if let indexPath = self.bodypartstable.indexPathForSelectedRow {
+                
+                // get the cell associated with the indexPath selected.
+                //let cell = self.bodypartstable.cellForRow(at: indexPath) as UITableViewCell!
+                
+                // get the label text to pass to destinationController
+                //let text1 = cell?.textLabel?.text;
+                //let text1 = "\(cell?.textLabel?.text)"
+                
+                
+                let destinationController = segue.destination as! HeadImagesController
+                HeadImagesController.bodypart = self.buttonClicked;
+            //}
+        }
+    }
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    @IBOutlet var bodypartstable: UITableView!
+    
+    
     
     @IBAction func headButton(_ sender: Any) {
-    self.performSegue(withIdentifier: "segue1", sender: self)
+        self.buttonClicked = "headAndNeck";
+        self.performSegue(withIdentifier: "segue1", sender: self)
     }
     
 
     @IBAction func leftArmButton(_ sender: Any) {
-        self.performSegue(withIdentifier: "segue2", sender: self)
-
+        self.buttonClicked = "leftArm";
+        self.performSegue(withIdentifier: "segue1", sender: self)
     }
     
     @IBAction func rightArmButton(_ sender: Any) {
-        self.performSegue(withIdentifier: "segue3", sender: self)
-
+        self.buttonClicked = "rightArm";
+        self.performSegue(withIdentifier: "segue1", sender: self)
     }
     @IBAction func stomachButton(_ sender: Any) {
-        self.performSegue(withIdentifier: "segue4", sender: self)
-
+        self.buttonClicked = "stomach";
+        self.performSegue(withIdentifier: "segue1", sender: self)
     }
     @IBAction func backButton(_ sender: Any) {
-        self.performSegue(withIdentifier: "segue5", sender: self)
-
+        self.buttonClicked = "back";
+        self.performSegue(withIdentifier: "segue1", sender: self)
     }
     @IBAction func leftLegButton(_ sender: Any) {
-        self.performSegue(withIdentifier: "segue6", sender: self)
-
+        self.buttonClicked = "leftLeg";
+        self.performSegue(withIdentifier: "segue1", sender: self)
     }
     @IBAction func rightLegButton(_ sender: Any) {
-        self.performSegue(withIdentifier: "segue7", sender: self)
-
+        self.buttonClicked = "rightLeg";
+        self.performSegue(withIdentifier: "segue1", sender: self)
     }
     
     
@@ -63,6 +100,8 @@ class FolderSelector: UITableViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    
 
     // MARK: - Table view data source
 

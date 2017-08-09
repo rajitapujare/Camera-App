@@ -27,6 +27,7 @@ extension URL {
 
 class HeadImagesController: UITableViewController {
 
+    static var bodypart = String()
     var name = String()
     let fm = FileManager.default
     var text = String()
@@ -40,7 +41,7 @@ class HeadImagesController: UITableViewController {
         self.tableviewoptions.register(UITableViewCell.self, forCellReuseIdentifier: "cell1")
 
         let docsurl = try! fm.url(for:.documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
-        let myurl = docsurl.appendingPathComponent("headAndNeck")
+        let myurl = docsurl.appendingPathComponent(HeadImagesController.bodypart)
         var urlString: String = myurl.path
 
         let items = try! fm.contentsOfDirectory(atPath: urlString)
@@ -93,7 +94,7 @@ class HeadImagesController: UITableViewController {
 
  */
         let docsurl = try! fm.url(for:.documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
-        let myurl = docsurl.appendingPathComponent("headAndNeck")
+        let myurl = docsurl.appendingPathComponent(HeadImagesController.bodypart)
         var urlString: String = myurl.path
         
         let items = try! fm.contentsOfDirectory(atPath: urlString)
@@ -125,7 +126,7 @@ class HeadImagesController: UITableViewController {
 
 */
         let docsurl = try! fm.url(for:.documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
-        let myurl = docsurl.appendingPathComponent("headAndNeck")
+        let myurl = docsurl.appendingPathComponent(HeadImagesController.bodypart)
         var urlString: String = myurl.path
         
         let items = try! fm.contentsOfDirectory(atPath: urlString)
@@ -172,7 +173,7 @@ override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Pass the selected object to the new view controller.
 
     let docsurl = try! fm.url(for:.documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
-    let myurl = docsurl.appendingPathComponent("headAndNeck")
+    let myurl = docsurl.appendingPathComponent(HeadImagesController.bodypart)
     var urlString: String = myurl.path
 
     if (segue.identifier == "showpics1") {
@@ -187,7 +188,7 @@ override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
             
 
             let destinationController = segue.destination as! HeadTimePhotoViewer
-            HeadTimePhotoViewer.name2 = text1!
+            HeadTimePhotoViewer.name2 = urlString + "/" + text1!
         }   
     }
 }

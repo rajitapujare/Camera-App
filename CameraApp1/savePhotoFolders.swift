@@ -32,15 +32,7 @@ class savePhotoFolders: UITableViewController, UIAlertViewDelegate {
 //    var timestampString: String = "";
     var timestampString = String()
     
-
-    @IBAction func createTextAlert(_ sender: Any) {
- /*       var alert = UIAlertView(title: "Enter Mole Name", message: nil, delegate: self, cancelButtonTitle: "Cancel")
-        
-        alert.addButton(withTitle: "Done")
-        alert.alertViewStyle = .plainTextInput
-        alert.show()
-*/
-        
+    func commonHelperFunction(_ sender: Any, body: String) {
         func configurationTextField(textField: UITextField!)
         {
             print("generating the TextField")
@@ -66,7 +58,7 @@ class savePhotoFolders: UITableViewController, UIAlertViewDelegate {
             if let documentDirectoryPath = documentDirectoryPath {
                 // create the custom folder path
                 
-                let  newDirectoryPath = documentDirectoryPath.appending("/headAndNeck")
+                let  newDirectoryPath = documentDirectoryPath.appending("/" + body)
                 let fileManager = FileManager.default
                 //                    if !fileManager.fileExists(atPath: newDirectoryPath) {
                 do {
@@ -74,648 +66,140 @@ class savePhotoFolders: UITableViewController, UIAlertViewDelegate {
                                                     withIntermediateDirectories: true,
                                                     attributes: nil)
                 } catch {
-                    print("Error creating headAndNeck folder in documents dir: \(error)")
+                    print("Error creating" + body + " folder in documents dir: \(error)")
                 }
                 
                 
                 
                 //                    }
-
-            if input != nil {
                 
-                
-                let  newDirectoryPath1 = newDirectoryPath + "/" + input!;
-                       // let  newDirectoryPath1 = newDirectoryPath.appending("/\(input)")
-//                    let  newDirectoryPath1 = newDirectoryPath.appending("/headAndNeck/\(input)/\(self.timestamp)")
-
-                            do {
-                                try fileManager.createDirectory(atPath: newDirectoryPath1,
-                                                                withIntermediateDirectories: true,
-                                                                attributes: nil)
-                            } catch {
-                                print("Error creating /headAndNeck/\(input) folder in documents dir: \(error)")
-                }
-                
-                let double = Double(self.timestamp)
-                let date2 = (Date(timeIntervalSince1970: double!))
-                self.timestampString = "\(date2)"
-                
-                let  newDirectoryPath2 = newDirectoryPath1 + "/" + self.timestampString;
-                print("newDirectoryPath2 is " + newDirectoryPath2)
-                
-                do {
-                    try fileManager.createDirectory(atPath: newDirectoryPath2,
-                                                    withIntermediateDirectories: true,
-                                                    attributes: nil)
-                    print("newDirectoryPath2 created " + newDirectoryPath2)
-                } catch {
-                    print("Error creating /headAndNeck/\(input)/\(self.timestamp) folder in documents dir: \(error)")
-                }
-
-                func saveMyImageToDocumentDirectory(_ capturedImage2: UIImage) -> String {
-                    print("saveImageToDocumentDirectory 0");
-                    let docsurl = try! self.fm.url(for:.documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
-                    let myurl = docsurl.appendingPathComponent("headAndNeck/" + input! + "/\(self.timestampString)" + "/image1.jpg");
-                    let  newDirectoryPath = documentDirectoryPath.appending("/headAndNeck")
+                if input != nil {
                     
-                    print("saveImageToDocumentDirectory 1")
                     
-                    let  newDirectoryPath1 = newDirectoryPath.appending("/\(input)")
+                    let  newDirectoryPath1 = newDirectoryPath + "/" + input!;
+                    // let  newDirectoryPath1 = newDirectoryPath.appending("/\(input)")
+                    //                    let  newDirectoryPath1 = newDirectoryPath.appending("/headAndNeck/\(input)/\(self.timestamp)")
                     
                     do {
-                        try self.fm.createDirectory(atPath: newDirectoryPath1, withIntermediateDirectories: true, attributes: nil)
+                        try fileManager.createDirectory(atPath: newDirectoryPath1,
+                                                        withIntermediateDirectories: true,
+                                                        attributes: nil)
                     } catch {
-                        print("Error creating /headAndNeck/\(input) folder in documents dir: \(error)")
+                        print("Error creating /\(body)/\(input) folder in documents dir: \(error)")
                     }
                     
-                    print("saveImageToDocumentDirectory 2")
-                    let  newDirectoryPath2 = (newDirectoryPath1) + "/" + self.timestampString;
+                    let double = Double(self.timestamp)
+                    let date2 = (Date(timeIntervalSince1970: double!))
+                    self.timestampString = "\(date2)"
+                    
+                    let  newDirectoryPath2 = newDirectoryPath1 + "/" + self.timestampString;
+                    print("newDirectoryPath2 is " + newDirectoryPath2)
                     
                     do {
-                        try self.fm.createDirectory(atPath: newDirectoryPath2, withIntermediateDirectories: true, attributes: nil)
+                        try fileManager.createDirectory(atPath: newDirectoryPath2,
+                                                        withIntermediateDirectories: true,
+                                                        attributes: nil)
+                        print("newDirectoryPath2 created " + newDirectoryPath2)
                     } catch {
-                        print("Error creating /headAndNeck/\(input)/\(self.timestamp) folder in documents dir: \(error)")
+                        print("Error creating /\(body)/\(input)/\(self.timestamp) folder in documents dir: \(error)")
                     }
                     
-                    print("saveImageToDocumentDirectory 3")
-                    //                let directoryPath =  NSHomeDirectory().appending("/Documents/headAndNeck/\(input)/\(self.timestamp)")
-                    /*
-                    let fileUrl = Foundation.URL(string: newDirectoryPath2)
-                    
-                    let filename = "/\(self.timestamp)".appending(".jpg")
-                    let filepath = newDirectoryPath2.appending(filename)
-                    var urlString: String = fileUrl!.path
- */
-                    
-                    print("saveImageToDocumentDirectory 4")
-                    
-                    let items = try! self.fm.contentsOfDirectory(atPath: newDirectoryPath2)
-                    print("saveImageToDocumentDirectory 5")
-                    print(items)
-                    
-                    //                let url = NSURL.fileURL(withPath: filepath)
-                    do {
-                        try UIImageJPEGRepresentation(capturedImage2, 1.0)?.write(to: myurl, options: .atomic)
-                        print("saving image to " + myurl.absoluteString);
-                        return String.init(myurl.absoluteString)
+                    func saveMyImageToDocumentDirectory(_ capturedImage2: UIImage) -> String {
+                        print("saveImageToDocumentDirectory 0");
+                        let docsurl = try! self.fm.url(for:.documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
+                        let myurl = docsurl.appendingPathComponent(body + "/" + input! + "/\(self.timestampString)" + "/image1.jpg");
+                        let  newDirectoryPath = documentDirectoryPath.appending("/" + body)
                         
-                    } catch {
-                        print(error)
-                        print("file cant not be save at path \(myurl.absoluteString), with error : \(error)");
-                        return myurl.absoluteString
+                        print("saveImageToDocumentDirectory 1")
+                        
+                        let  newDirectoryPath1 = newDirectoryPath.appending("/\(input)")
+                        
+                        do {
+                            try self.fm.createDirectory(atPath: newDirectoryPath1, withIntermediateDirectories: true, attributes: nil)
+                        } catch {
+                            print("Error creating /\(body)/\(input) folder in documents dir: \(error)")
+                        }
+                        
+                        print("saveImageToDocumentDirectory 2")
+                        let  newDirectoryPath2 = (newDirectoryPath1) + "/" + self.timestampString;
+                        
+                        do {
+                            try self.fm.createDirectory(atPath: newDirectoryPath2, withIntermediateDirectories: true, attributes: nil)
+                        } catch {
+                            print("Error creating /\(body)/\(input)/\(self.timestamp) folder in documents dir: \(error)")
+                        }
+                        
+                        print("saveImageToDocumentDirectory 3")
+                        //                let directoryPath =  NSHomeDirectory().appending("/Documents/headAndNeck/\(input)/\(self.timestamp)")
+                        /*
+                         let fileUrl = Foundation.URL(string: newDirectoryPath2)
+                         
+                         let filename = "/\(self.timestamp)".appending(".jpg")
+                         let filepath = newDirectoryPath2.appending(filename)
+                         var urlString: String = fileUrl!.path
+                         */
+                        
+                        print("saveImageToDocumentDirectory 4")
+                        
+                        let items = try! self.fm.contentsOfDirectory(atPath: newDirectoryPath2)
+                        print("saveImageToDocumentDirectory 5")
+                        print(items)
+                        
+                        //                let url = NSURL.fileURL(withPath: filepath)
+                        do {
+                            try UIImageJPEGRepresentation(capturedImage2, 1.0)?.write(to: myurl, options: .atomic)
+                            print("saving image to " + myurl.absoluteString);
+                            return String.init(myurl.absoluteString)
+                            
+                        } catch {
+                            print(error)
+                            print("file cant not be save at path \(myurl.absoluteString), with error : \(error)");
+                            return myurl.absoluteString
+                        }
                     }
-                }
-
-                saveMyImageToDocumentDirectory(self.capturedImage2);
-            
-            }
-        
-        }
- 
-            func saveImageToDocumentDirectory(_ capturedImage2: UIImage) -> String {
-                print("saveImageToDocumentDirectory 0");
-                let docsurl = try! self.fm.url(for:.documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
-                let myurl = docsurl.appendingPathComponent("headAndNeck/\(input)/\(self.timestampString)")
-                let  newDirectoryPath = documentDirectoryPath?.appending("/headAndNeck")
-                
-                print("saveImageToDocumentDirectory 1")
-
-                let  newDirectoryPath1 = newDirectoryPath?.appending("/\(input)")
- 
-                    do {
-                            try self.fm.createDirectory(atPath: newDirectoryPath1!, withIntermediateDirectories: true, attributes: nil)
-                    } catch {
-                        print("Error creating /headAndNeck/\(input) folder in documents dir: \(error)")
-                }
- 
-                print("saveImageToDocumentDirectory 2")
-                let  newDirectoryPath2 = (newDirectoryPath1)! + "/" + self.timestampString;
-                
-                do {
-                    try self.fm.createDirectory(atPath: newDirectoryPath2, withIntermediateDirectories: true, attributes: nil)
-                } catch {
-                    print("Error creating /headAndNeck/\(input)/\(self.timestamp) folder in documents dir: \(error)")
-                }
-
-                                print("saveImageToDocumentDirectory 3")
-//                let directoryPath =  NSHomeDirectory().appending("/Documents/headAndNeck/\(input)/\(self.timestamp)")
-                let fileUrl = Foundation.URL(string: newDirectoryPath2)
-
-                let filename = "/\(self.timestamp)".appending(".jpg")
-                let filepath = newDirectoryPath2.appending(filename)
-                var urlString: String = fileUrl!.path
-
-                                print("saveImageToDocumentDirectory 4")
-
-                let items = try! self.fm.contentsOfDirectory(atPath: newDirectoryPath2)
-                                print("saveImageToDocumentDirectory 5")
-                print(items)
-
-//                let url = NSURL.fileURL(withPath: filepath)
-                do {
-                    try UIImageJPEGRepresentation(capturedImage2, 1.0)?.write(to: myurl, options: .atomic)
-                    print("saving image to " + myurl.absoluteString);
-                    return String.init(myurl.absoluteString)
                     
-                } catch {
-                    print(error)
-                    print("file cant not be save at path \(filepath), with error : \(error)");
-                    return filepath
+                    saveMyImageToDocumentDirectory(self.capturedImage2);
+                    
                 }
+                
             }
-
-
+            
             
         }))
         self.present(alert, animated: true, completion: {
             print("completion block")
         })
-
         
+        
+    }
+
+    @IBAction func createTextAlert(_ sender: Any) {
+        commonHelperFunction(sender, body: "headAndNeck");
     }
 
     @IBAction func saveLeftArmPhoto(_ sender: Any) {
-        func configurationTextField(textField: UITextField!)
-        {
-            print("generating the TextField")
-            textField.placeholder = "Enter name"
-            tField = textField
-        }
-        
-        func handleCancel(alertView: UIAlertAction!)
-        {
-            print("Cancelled !!")
-        }
-        
-        var alert = UIAlertController(title: "Enter Mole Name", message: "", preferredStyle: .alert)
-        
-        alert.addTextField(configurationHandler: configurationTextField)
-        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler:handleCancel))
-        alert.addAction(UIAlertAction(title: "Done", style: .default, handler:{ (UIAlertAction) in
-            print("Done !!")
-            
-            print("Item : \(String(describing: self.tField.text))")
-            let input = self.tField.text
-            if input != nil {
-                
-                let documentDirectoryPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first
-                
-                if let documentDirectoryPath = documentDirectoryPath {
-                    // create the custom folder path
-                    
-                    let  newDirectoryPath = documentDirectoryPath.appending("/leftArm/\(input)/\(self.timestamp)")
-                    let fileManager = FileManager.default
-                    if !fileManager.fileExists(atPath: newDirectoryPath) {
-                        do {
-                            try fileManager.createDirectory(atPath: newDirectoryPath,
-                                                            withIntermediateDirectories: false,
-                                                            attributes: nil)
-                        } catch {
-                            print("Error creating /leftArm/\(input) folder in documents dir: \(error)")
-                        }
-                    }
-                }
-                
-            }
-            func saveImageToDocumentDirectory(_ capturedImage2: UIImage) -> String {
-                let directoryPath =  NSHomeDirectory().appending("/Documents/leftArm/\(input)/\(self.timestamp)")
-                if !FileManager.default.fileExists(atPath: directoryPath) {
-                    do {
-                        try FileManager.default.createDirectory(at: NSURL.fileURL(withPath: directoryPath), withIntermediateDirectories: true, attributes: nil)
-                    } catch {
-                        print(error)
-                    }
-                }
-                let filename = "leftArm\(input)\(self.timestamp)".appending(".jpg")
-                let filepath = directoryPath.appending(filename)
-                let url = NSURL.fileURL(withPath: filepath)
-                do {
-                    try UIImageJPEGRepresentation(capturedImage2, 1.0)?.write(to: url, options: .atomic)
-                    return String.init("/Documents/leftArm/\(input)/\(self.timestamp)/\(filename)")
-                    
-                } catch {
-                    print(error)
-                    print("file cant not be save at path \(filepath), with error : \(error)");
-                    return filepath
-                }
-            }
-            
-            
-            
-        }))
-        self.present(alert, animated: true, completion: {
-            print("completion block")
-        })
-        
-
+        commonHelperFunction(sender, body: "leftArm");
     }
 
     @IBAction func saveRightArmPhoto(_ sender: Any) {
-        func configurationTextField(textField: UITextField!)
-        {
-            print("generating the TextField")
-            textField.placeholder = "Enter name"
-            tField = textField
-        }
-        
-        func handleCancel(alertView: UIAlertAction!)
-        {
-            print("Cancelled !!")
-        }
-        
-        var alert = UIAlertController(title: "Enter Mole Name", message: "", preferredStyle: .alert)
-        
-        alert.addTextField(configurationHandler: configurationTextField)
-        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler:handleCancel))
-        alert.addAction(UIAlertAction(title: "Done", style: .default, handler:{ (UIAlertAction) in
-            print("Done !!")
-            
-            print("Item : \(String(describing: self.tField.text))")
-            let input = self.tField.text
-            if input != nil {
-                
-                let documentDirectoryPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first
-                
-                if let documentDirectoryPath = documentDirectoryPath {
-                    // create the custom folder path
-                    
-                    let  newDirectoryPath = documentDirectoryPath.appending("/rightArm/\(input)/\(self.timestamp)")
-                    let fileManager = FileManager.default
-                    if !fileManager.fileExists(atPath: newDirectoryPath) {
-                        do {
-                            try fileManager.createDirectory(atPath: newDirectoryPath,
-                                                            withIntermediateDirectories: false,
-                                                            attributes: nil)
-                        } catch {
-                            print("Error creating /rightArm/\(input) folder in documents dir: \(error)")
-                        }
-                    }
-                }
-                
-            }
-            func saveImageToDocumentDirectory(_ capturedImage2: UIImage) -> String {
-                let directoryPath =  NSHomeDirectory().appending("/Documents/rightArm/\(input)/\(self.timestamp)")
-                if !FileManager.default.fileExists(atPath: directoryPath) {
-                    do {
-                        try FileManager.default.createDirectory(at: NSURL.fileURL(withPath: directoryPath), withIntermediateDirectories: true, attributes: nil)
-                    } catch {
-                        print(error)
-                    }
-                }
-                let filename = "rightArm\(input)\(self.timestamp)".appending(".jpg")
-                let filepath = directoryPath.appending(filename)
-                let url = NSURL.fileURL(withPath: filepath)
-                do {
-                    try UIImageJPEGRepresentation(capturedImage2, 1.0)?.write(to: url, options: .atomic)
-                    return String.init("/Documents/rightArm/\(input)/\(self.timestamp)/\(filename)")
-                    
-                } catch {
-                    print(error)
-                    print("file cant not be save at path \(filepath), with error : \(error)");
-                    return filepath
-                }
-            }
-            
-            
-            
-        }))
-        self.present(alert, animated: true, completion: {
-            print("completion block")
-        })
-        
-
+        commonHelperFunction(sender, body: "rightArm");
     }
 
     @IBAction func saveStomachPhoto(_ sender: Any) {
-        func configurationTextField(textField: UITextField!)
-        {
-            print("generating the TextField")
-            textField.placeholder = "Enter name"
-            tField = textField
-        }
-        
-        func handleCancel(alertView: UIAlertAction!)
-        {
-            print("Cancelled !!")
-        }
-        
-        var alert = UIAlertController(title: "Enter Mole Name", message: "", preferredStyle: .alert)
-        
-        alert.addTextField(configurationHandler: configurationTextField)
-        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler:handleCancel))
-        alert.addAction(UIAlertAction(title: "Save", style: .default, handler:{ (UIAlertAction) in
-            print("Done !!")
-            
-            print("Item : \(String(describing: self.tField.text))")
-            let input = self.tField.text
-            if input != nil {
-                
-                let documentDirectoryPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first
-                
-                if let documentDirectoryPath = documentDirectoryPath {
-                    // create the custom folder path
-                    
-                    let  newDirectoryPath = documentDirectoryPath.appending("/stomach/\(input)/\(self.timestamp)")
-                    let fileManager = FileManager.default
-                    if !fileManager.fileExists(atPath: newDirectoryPath) {
-                        do {
-                            try fileManager.createDirectory(atPath: newDirectoryPath,
-                                                            withIntermediateDirectories: false,
-                                                            attributes: nil)
-                        } catch {
-                            print("Error creating /stomach/\(input) folder in documents dir: \(error)")
-                        }
-                    }
-                }
-                
-            }
-            func saveImageToDocumentDirectory(_ capturedImage2: UIImage) -> String {
-                let directoryPath =  NSHomeDirectory().appending("/Documents/stomach/\(input)/\(self.timestamp)")
-                if !FileManager.default.fileExists(atPath: directoryPath) {
-                    do {
-                        try FileManager.default.createDirectory(at: NSURL.fileURL(withPath: directoryPath), withIntermediateDirectories: true, attributes: nil)
-                    } catch {
-                        print(error)
-                    }
-                }
-                let filename = "stomach\(input)\(self.timestamp)".appending(".jpg")
-                let filepath = directoryPath.appending(filename)
-                let url = NSURL.fileURL(withPath: filepath)
-                do {
-                    try UIImageJPEGRepresentation(capturedImage2, 1.0)?.write(to: url, options: .atomic)
-                    return String.init("/Documents/stomach/\(input)/\(self.timestamp)/\(filename)")
-                    
-                } catch {
-                    print(error)
-                    print("file cant not be save at path \(filepath), with error : \(error)");
-                    return filepath
-                }
-            }
-            
-            
-            
-        }))
-        self.present(alert, animated: true, completion: {
-            print("completion block")
-        })
-        
-
+        commonHelperFunction(sender, body: "stomach");
     }
     @IBAction func saveBackPhoto(_ sender: Any) {
-        func configurationTextField(textField: UITextField!)
-        {
-            print("generating the TextField")
-            textField.placeholder = "Enter name"
-            tField = textField
-        }
-        
-        func handleCancel(alertView: UIAlertAction!)
-        {
-            print("Cancelled !!")
-        }
-        
-        var alert = UIAlertController(title: "Enter Mole Name", message: "", preferredStyle: .alert)
-        
-        alert.addTextField(configurationHandler: configurationTextField)
-        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler:handleCancel))
-        alert.addAction(UIAlertAction(title: "Done", style: .default, handler:{ (UIAlertAction) in
-            print("Done !!")
-            
-            print("Item : \(String(describing: self.tField.text))")
-            let input = self.tField.text
-            if input != nil {
-                
-                let documentDirectoryPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first
-                
-                if let documentDirectoryPath = documentDirectoryPath {
-                    // create the custom folder path
-                    
-                    let  newDirectoryPath = documentDirectoryPath.appending("/back/\(input)/\(self.timestamp)")
-                    let fileManager = FileManager.default
-                    if !fileManager.fileExists(atPath: newDirectoryPath) {
-                        do {
-                            try fileManager.createDirectory(atPath: newDirectoryPath,
-                                                            withIntermediateDirectories: false,
-                                                            attributes: nil)
-                        } catch {
-                            print("Error creating /back/\(input) folder in documents dir: \(error)")
-                        }
-                    }
-                }
-                
-            }
-            func saveImageToDocumentDirectory(_ capturedImage2: UIImage) -> String {
-                let directoryPath =  NSHomeDirectory().appending("/Documents/back/\(input)/\(self.timestamp)")
-                if !FileManager.default.fileExists(atPath: directoryPath) {
-                    do {
-                        try FileManager.default.createDirectory(at: NSURL.fileURL(withPath: directoryPath), withIntermediateDirectories: true, attributes: nil)
-                    } catch {
-                        print(error)
-                    }
-                }
-                let filename = "back\(input)\(self.timestamp)".appending(".jpg")
-                let filepath = directoryPath.appending(filename)
-                let url = NSURL.fileURL(withPath: filepath)
-                do {
-                    try UIImageJPEGRepresentation(capturedImage2, 1.0)?.write(to: url, options: .atomic)
-                    return String.init("/Documents/back/\(input)/\(self.timestamp)/\(filename)")
-                    
-                } catch {
-                    print(error)
-                    print("file cant not be save at path \(filepath), with error : \(error)");
-                    return filepath
-                }
-            }
-            
-            
-            
-        }))
-        self.present(alert, animated: true, completion: {
-            print("completion block")
-        })
-        
-
+        commonHelperFunction(sender, body: "back");
     }
     @IBAction func saveLeftLegPhoto(_ sender: Any) {
-        func configurationTextField(textField: UITextField!)
-        {
-            print("generating the TextField")
-            textField.placeholder = "Enter name"
-            tField = textField
-        }
-        
-        func handleCancel(alertView: UIAlertAction!)
-        {
-            print("Cancelled !!")
-        }
-        
-        var alert = UIAlertController(title: "Enter Mole Name", message: "", preferredStyle: .alert)
-        
-        alert.addTextField(configurationHandler: configurationTextField)
-        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler:handleCancel))
-        alert.addAction(UIAlertAction(title: "Done", style: .default, handler:{ (UIAlertAction) in
-            print("Done !!")
-            
-            print("Item : \(String(describing: self.tField.text))")
-            let input = self.tField.text
-            if input != nil {
-                
-                let documentDirectoryPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first
-                
-                if let documentDirectoryPath = documentDirectoryPath {
-                    // create the custom folder path
-                    
-                    let  newDirectoryPath = documentDirectoryPath.appending("/leftLeg/\(input)/\(self.timestamp)")
-                    let fileManager = FileManager.default
-                    if !fileManager.fileExists(atPath: newDirectoryPath) {
-                        do {
-                            try fileManager.createDirectory(atPath: newDirectoryPath,
-                                                            withIntermediateDirectories: false,
-                                                            attributes: nil)
-                        } catch {
-                            print("Error creating /leftLeg/\(input) folder in documents dir: \(error)")
-                        }
-                    }
-                }
-                
-            }
-            func saveImageToDocumentDirectory(_ capturedImage2: UIImage) -> String {
-                let directoryPath =  NSHomeDirectory().appending("/Documents/leftLeg/\(input)/\(self.timestamp)")
-                if !FileManager.default.fileExists(atPath: directoryPath) {
-                    do {
-                        try FileManager.default.createDirectory(at: NSURL.fileURL(withPath: directoryPath), withIntermediateDirectories: true, attributes: nil)
-                    } catch {
-                        print(error)
-                    }
-                }
-                let filename = "leftLeg\(input)\(self.timestamp)".appending(".jpg")
-                let filepath = directoryPath.appending(filename)
-                let url = NSURL.fileURL(withPath: filepath)
-                do {
-                    try UIImageJPEGRepresentation(capturedImage2, 1.0)?.write(to: url, options: .atomic)
-                    return String.init("/Documents/leftLeg/\(input)/\(self.timestamp)/\(filename)")
-                    
-                } catch {
-                    print(error)
-                    print("file cant not be save at path \(filepath), with error : \(error)");
-                    return filepath
-                }
-            }
-            
-            
-            
-        }))
-        self.present(alert, animated: true, completion: {
-            print("completion block")
-        })
-        
-
+        commonHelperFunction(sender, body: "leftLeg");
     }
     
     @IBAction func saverightLegPhoto(_ sender: Any) {
-        func configurationTextField(textField: UITextField!)
-        {
-            print("generating the TextField")
-            textField.placeholder = "Enter name"
-            tField = textField
-        }
-        
-        func handleCancel(alertView: UIAlertAction!)
-        {
-            print("Cancelled !!")
-        }
-        
-        var alert = UIAlertController(title: "Enter Mole Name", message: "", preferredStyle: .alert)
-        
-        alert.addTextField(configurationHandler: configurationTextField)
-        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler:handleCancel))
-        alert.addAction(UIAlertAction(title: "Done", style: .default, handler:{ (UIAlertAction) in
-            print("Done !!")
-            
-            print("Item : \(String(describing: self.tField.text))")
-            let input = self.tField.text
-            if input != nil {
-                
-                let documentDirectoryPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first
-                
-                if let documentDirectoryPath = documentDirectoryPath {
-                    // create the custom folder path
-                    
-                    let  newDirectoryPath = documentDirectoryPath.appending("/rightLeg/\(input)/\(self.timestamp)")
-                    let fileManager = FileManager.default
-                    if !fileManager.fileExists(atPath: newDirectoryPath) {
-                        do {
-                            try fileManager.createDirectory(atPath: newDirectoryPath,
-                                                            withIntermediateDirectories: false,
-                                                            attributes: nil)
-                        } catch {
-                            print("Error creating /rightLeg/\(input) folder in documents dir: \(error)")
-                        }
-                    }
-                }
-                
-            }
-            func saveImageToDocumentDirectory(_ capturedImage2: UIImage) -> String {
-                let directoryPath =  NSHomeDirectory().appending("/Documents/rightLeg/\(input)/\(self.timestamp)")
-                if !FileManager.default.fileExists(atPath: directoryPath) {
-                    do {
-                        try FileManager.default.createDirectory(at: NSURL.fileURL(withPath: directoryPath), withIntermediateDirectories: true, attributes: nil)
-                    } catch {
-                        print(error)
-                    }
-                }
-                let filename = "rightLeg\(input)\(self.timestamp)".appending(".jpg")
-                let filepath = directoryPath.appending(filename)
-                let url = NSURL.fileURL(withPath: filepath)
-                do {
-                    try UIImageJPEGRepresentation(capturedImage2, 1.0)?.write(to: url, options: .atomic)
-                    return String.init("/Documents/rightLeg/\(input)/\(self.timestamp)/\(filename)")
-                    
-                } catch {
-                    print(error)
-                    print("file cant not be save at path \(filepath), with error : \(error)");
-                    return filepath
-                }
-            }
-            
-            
-            
-        }))
-        self.present(alert, animated: true, completion: {
-            print("completion block")
-        })
-        
-
+        commonHelperFunction(sender, body: "rightLeg");
     }
     
 
-  /*  @IBAction func saverightLegPhoto(_ sender: Any) {
-        let input = self.tField.text
-        if input != nil {
-            
-            let documentDirectoryPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first
-            
-            if let documentDirectoryPath = documentDirectoryPath {
-                // create the custom folder path
-                
-                let   newDirectoryPath = documentDirectoryPath.appending("/rightLeg/\(input)")
-                let fileManager = FileManager.default
-                if !fileManager.fileExists(atPath: newDirectoryPath) {
-                    do {
-                        try fileManager.createDirectory(atPath: newDirectoryPath,
-                                                        withIntermediateDirectories: false,
-                                                        attributes: nil)
-                    } catch {
-                        print("Error creating /rightLeg/\(input) folder in documents dir: \(error)")
-                    }
-                }
-            }
-            
-        }
-
-    }
-    
-   */
     override func viewDidLoad() {
         super.viewDidLoad()
             // path to documents directory

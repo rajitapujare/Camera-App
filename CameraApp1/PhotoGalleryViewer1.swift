@@ -32,8 +32,10 @@ class PhotoGalleryViewer1: UIViewController, UICollectionViewDataSource, UIColle
         collectionView.dataSource = self;
         collectionView.delegate = self
 
-        let myurl = docsurl.appendingPathComponent(PhotoGalleryViewer1.pathname)
-        var urlString: String = myurl.path
+        //let myurl = docsurl.appendingPathComponent(PhotoGalleryViewer1.pathname)
+        //let myurl = URL(string: PhotoGalleryViewer1.pathname)
+        var myurl = NSURL.fileURL(withPath: PhotoGalleryViewer1.pathname)
+        var urlString: String = PhotoGalleryViewer1.pathname
         
         let items = try! fm.contentsOfDirectory(atPath: urlString)
         
