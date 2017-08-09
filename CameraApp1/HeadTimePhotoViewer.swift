@@ -12,7 +12,7 @@ import Foundation
 
 class HeadTimePhotoViewer: UITableViewController {
 
-    var name2 = String()
+    static var name2 = String()
     let fm = FileManager.default
     var items3 = [String]()
 
@@ -22,7 +22,7 @@ class HeadTimePhotoViewer: UITableViewController {
         super.viewDidLoad()
 
         let docsurl = try! fm.url(for:.documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
-        let myurl = docsurl.appendingPathComponent("headAndNeck/\(name2)")
+        let myurl = docsurl.appendingPathComponent("headAndNeck/\(HeadTimePhotoViewer.name2)")
         var urlString: String = myurl.path
         
         let items = try! fm.contentsOfDirectory(atPath: urlString)
@@ -64,7 +64,7 @@ class HeadTimePhotoViewer: UITableViewController {
         // #warning Incomplete implementation, return the number of rows
         
         let docsurl = try! fm.url(for:.documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
-        let myurl = docsurl.appendingPathComponent("headAndNeck/\(name2)")
+        let myurl = docsurl.appendingPathComponent("headAndNeck/" + HeadTimePhotoViewer.name2)
         var urlString: String = myurl.path
         
         let items = try! fm.contentsOfDirectory(atPath: urlString)
@@ -77,7 +77,7 @@ class HeadTimePhotoViewer: UITableViewController {
     override func tableView(_ timestampList: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let docsurl = try! fm.url(for:.documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
-        let myurl = docsurl.appendingPathComponent("headAndNeck/\(name2)")
+        let myurl = docsurl.appendingPathComponent("headAndNeck/" + HeadTimePhotoViewer.name2)
         var urlString: String = myurl.path
         
         let items1 = try! fm.contentsOfDirectory(atPath: urlString)
@@ -101,7 +101,7 @@ class HeadTimePhotoViewer: UITableViewController {
         // Pass the selected object to the new view controller.
         
         let docsurl = try! fm.url(for:.documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
-        let myurl = docsurl.appendingPathComponent("headAndNeck/\(name2)/")
+        let myurl = docsurl.appendingPathComponent("headAndNeck/" + HeadTimePhotoViewer.name2)
         var urlString: String = myurl.path
         
         if (segue.identifier == "showpics5") {
@@ -115,11 +115,11 @@ class HeadTimePhotoViewer: UITableViewController {
                 // get the label text to pass to destinationController
                 let text2 = cell?.textLabel?.text
                 
-                let path = "headAndNeck/\(name2)/" + text2!;
+                let path = "headAndNeck/" + HeadTimePhotoViewer.name2 + "/" + text2!;
 
                 let destinationController = segue.destination as! PhotoGalleryViewer1
 
-                destinationController.pathname = path
+                PhotoGalleryViewer1.pathname = path
             }   
         }
     }

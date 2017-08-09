@@ -10,9 +10,15 @@ import UIKit
 
 class PhotoGalleryViewer1: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
     
+    /*
+    @IBAction func gobacktotimestamplist(_ sender: Any) {
+        performSegue(withIdentifier: "gobacktotime", sender: self)
+
+    }
+    */
     
     @IBOutlet weak var collectionView: UICollectionView!
-    var pathname = String()
+    static var pathname = String()
     var documentsUrl: URL {
         return FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
     }
@@ -26,7 +32,7 @@ class PhotoGalleryViewer1: UIViewController, UICollectionViewDataSource, UIColle
         collectionView.dataSource = self;
         collectionView.delegate = self
 
-        let myurl = docsurl.appendingPathComponent("\(pathname)")
+        let myurl = docsurl.appendingPathComponent(PhotoGalleryViewer1.pathname)
         var urlString: String = myurl.path
         
         let items = try! fm.contentsOfDirectory(atPath: urlString)

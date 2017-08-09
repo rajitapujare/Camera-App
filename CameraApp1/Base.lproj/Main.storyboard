@@ -1173,7 +1173,8 @@
                                         <barButtonItem key="leftBarButtonItem" title="Back" id="tSZ-kA-OHG">
                                             <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <connections>
-                                                <segue destination="1V4-NG-SAs" kind="show" id="HNR-lJ-vjp"/>
+                                                <action selector="gobacktotimestamplist:" destination="gsl-iE-SuZ" id="hN2-B6-GO6"/>
+                                                <segue destination="1V4-NG-SAs" kind="show" identifier="gobacktotime" id="HNR-lJ-vjp"/>
                                             </connections>
                                         </barButtonItem>
                                     </navigationItem>

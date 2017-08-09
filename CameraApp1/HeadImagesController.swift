@@ -187,7 +187,7 @@ override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
             
 
             let destinationController = segue.destination as! HeadTimePhotoViewer
-            destinationController.name2 = text1!
+            HeadTimePhotoViewer.name2 = text1!
         }   
     }
 }
