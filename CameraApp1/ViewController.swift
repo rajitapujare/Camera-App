@@ -422,9 +422,8 @@ private func configureSession() {
         
         
         whiteImage.image = UIImage(named: "white")
-        
+
         timer = Timer.scheduledTimer(timeInterval: 0.3, target: self, selector: #selector(delayedAction), userInfo: nil, repeats: false)
-        
     }
 
     // called every time interval from the timer

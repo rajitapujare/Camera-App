@@ -61,7 +61,7 @@ class savePhotoFolders: UITableViewController, UIAlertViewDelegate {
                 
                 let  newDirectoryPath = documentDirectoryPath.appending("/" + body)
                 let fileManager = FileManager.default
-                //                    if !fileManager.fileExists(atPath: newDirectoryPath) {
+
                 do {
                     try fileManager.createDirectory(atPath: newDirectoryPath,
                                                     withIntermediateDirectories: true,
@@ -70,17 +70,8 @@ class savePhotoFolders: UITableViewController, UIAlertViewDelegate {
                     print("Error creating" + body + " folder in documents dir: \(error)")
                 }
                 
-                
-                
-                //                    }
-                
                 if input != nil {
-                    
-                    
                     let  newDirectoryPath1 = newDirectoryPath + "/" + input!;
-                    // let  newDirectoryPath1 = newDirectoryPath.appending("/\(input)")
-                    //                    let  newDirectoryPath1 = newDirectoryPath.appending("/headAndNeck/\(input)/\(self.timestamp)")
-                    
                     do {
                         try fileManager.createDirectory(atPath: newDirectoryPath1,
                                                         withIntermediateDirectories: true,
@@ -94,59 +85,19 @@ class savePhotoFolders: UITableViewController, UIAlertViewDelegate {
                     self.timestampString = "\(date2)"
                     
                     let  newDirectoryPath2 = newDirectoryPath1 + "/" + self.timestampString;
-                    print("newDirectoryPath2 is " + newDirectoryPath2)
                     
                     do {
                         try fileManager.createDirectory(atPath: newDirectoryPath2,
                                                         withIntermediateDirectories: true,
                                                         attributes: nil)
-                        print("newDirectoryPath2 created " + newDirectoryPath2)
                     } catch {
                         print("Error creating /\(body)/\(input)/\(self.timestamp) folder in documents dir: \(error)")
                     }
                     
                     func saveMyImageToDocumentDirectory(_ capturedImage2: UIImage, _ fileName: String) -> String {
-                        print("saveImageToDocumentDirectory 0");
                         let docsurl = try! self.fm.url(for:.documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
                         let myurl = docsurl.appendingPathComponent(body + "/" + input! + "/\(self.timestampString)" + "/" + fileName);
-                        let  newDirectoryPath = documentDirectoryPath.appending("/" + body)
-                        
-                        print("saveImageToDocumentDirectory 1")
-                        
-                        let  newDirectoryPath1 = newDirectoryPath.appending("/\(input)")
-                        
-                        do {
-                            try self.fm.createDirectory(atPath: newDirectoryPath1, withIntermediateDirectories: true, attributes: nil)
-                        } catch {
-                            print("Error creating /\(body)/\(input) folder in documents dir: \(error)")
-                        }
-                        
-                        print("saveImageToDocumentDirectory 2")
-                        let  newDirectoryPath2 = (newDirectoryPath1) + "/" + self.timestampString;
-                        
-                        do {
-                            try self.fm.createDirectory(atPath: newDirectoryPath2, withIntermediateDirectories: true, attributes: nil)
-                        } catch {
-                            print("Error creating /\(body)/\(input)/\(self.timestamp) folder in documents dir: \(error)")
-                        }
-                        
-                        print("saveImageToDocumentDirectory 3")
-                        //                let directoryPath =  NSHomeDirectory().appending("/Documents/headAndNeck/\(input)/\(self.timestamp)")
-                        /*
-                         let fileUrl = Foundation.URL(string: newDirectoryPath2)
-                         
-                         let filename = "/\(self.timestamp)".appending(".jpg")
-                         let filepath = newDirectoryPath2.appending(filename)
-                         var urlString: String = fileUrl!.path
-                         */
-                        
-                        print("saveImageToDocumentDirectory 4")
-                        
-                        let items = try! self.fm.contentsOfDirectory(atPath: newDirectoryPath2)
-                        print("saveImageToDocumentDirectory 5")
-                        print(items)
-                        
-                        //                let url = NSURL.fileURL(withPath: filepath)
+
                         do {
                             try UIImageJPEGRepresentation(capturedImage2, 1.0)?.write(to: myurl, options: .atomic)
                             print("saving image to " + myurl.absoluteString);
