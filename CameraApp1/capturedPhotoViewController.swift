@@ -19,7 +19,6 @@ class capturedPhotoViewController: UIViewController {
     @IBOutlet var pictureSwipe: UISwipeGestureRecognizer!
     var capturedImage1 = UIImage()
     var capturedImage2 = UIImage()
-    let red = UIImage(named: "redimage")
 
     @IBOutlet weak var capturedImageView: UIImageView!
     
@@ -33,17 +32,13 @@ class capturedPhotoViewController: UIViewController {
     }
     
     @IBAction func swipeThroughPhotos(_ sender: Any) {
-        
-        
             print("User swiped right")
-            capturedImageView.image = capturedImage2
-       
+            capturedImageView.image = capturedImage1
     }
     
     @IBAction func leftPhotoSwipe(_ sender: Any) {
         print("User swiped left")
-        capturedImageView.image = #imageLiteral(resourceName: "redimage")
-
+        capturedImageView.image = capturedImage2
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

@@ -45,6 +45,9 @@ class ViewController: UIViewController, AVCapturePhotoCaptureDelegate {
     
     @IBOutlet weak var capturedImage: UIImageView!
     
+    @IBOutlet weak var capturedImage2: UIImageView!
+
+    var secondImage: Bool = false;
     
     @IBOutlet weak var whitebalanceHUD: UIView!
     @IBOutlet weak var temperatureLabel: UILabel!
@@ -68,11 +71,13 @@ class ViewController: UIViewController, AVCapturePhotoCaptureDelegate {
     private let kExposureDurationPower = 5.0
     private let kExposureMinimumDuration = 1.0/1000
     var timer = Timer()
+    var cameraTimer = Timer()
     var Timestamp: String {
         return "\(NSDate().timeIntervalSince1970 * 1000)"
     }
     var imagesList = [AVAsset]()
     var image = UIImage()
+    var image2 = UIImage()
 
 
 
@@ -326,7 +331,7 @@ private func configureSession() {
         }
     }
     
-@IBAction func changeExposureDuration(_ control: UISlider) {
+    @IBAction func changeExposureDuration(_ control: UISlider) {
         
         let p = pow(Double(control.value), kExposureDurationPower) // Apply power function to expand slider's low-end range
         let minDurationSeconds = max(CMTimeGetSeconds(self.device1!.activeFormat.minExposureDuration), kExposureMinimumDuration)
@@ -341,7 +346,8 @@ private func configureSession() {
             NSLog("Could not lock device for configuration: \(error)")
         }
     }
-@IBAction func changeISO(_ control: UISlider) {
+    
+    @IBAction func changeISO(_ control: UISlider) {
         
         do {
             try self.device1!.lockForConfiguration()
@@ -351,6 +357,7 @@ private func configureSession() {
             NSLog("Could not lock device for configuration: \(error)")
         }
     }
+
     private func normalizedGains(_ gains: AVCaptureWhiteBalanceGains) -> AVCaptureWhiteBalanceGains {
         var g = gains
         
@@ -366,8 +373,7 @@ private func configureSession() {
     }
     
     
-private func setWhiteBalanceGains(_ gains: AVCaptureWhiteBalanceGains) {
-        
+    private func setWhiteBalanceGains(_ gains: AVCaptureWhiteBalanceGains) {
         do {
             try self.device1!.lockForConfiguration()
             let normalizedGains = self.normalizedGains(gains)
@@ -377,17 +383,16 @@ private func setWhiteBalanceGains(_ gains: AVCaptureWhiteBalanceGains) {
             NSLog("Could not lock device for configuration: \(error)")
         }
     }
-
     
-@IBAction func changeTemperature(_: AnyObject) {
+    
+    @IBAction func changeTemperature(_: AnyObject) {
         let temperatureAndTint = AVCaptureWhiteBalanceTemperatureAndTintValues(
             temperature: self.whitebalanceTemperatureSlider.value,
             tint: self.whitebalanceTintSlider.value
         )
-        
         self.setWhiteBalanceGains(self.device1!.deviceWhiteBalanceGains(for: temperatureAndTint))
     }
-
+    
     @IBAction func changeTint(_: AnyObject) {
         let temperatureAndTint = AVCaptureWhiteBalanceTemperatureAndTintValues(
             temperature: self.whitebalanceTemperatureSlider.value,
@@ -397,80 +402,82 @@ private func setWhiteBalanceGains(_ gains: AVCaptureWhiteBalanceGains) {
         self.setWhiteBalanceGains(self.device1!.deviceWhiteBalanceGains(for: temperatureAndTint))
     }
 
-
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
     
-    
-    
-@IBAction func pressCamera(_ sender: Any) {
-    performSegue(withIdentifier: "showpicture", sender: self)
-
-    
+    @IBAction func pressCamera(_ sender: Any) {
         let settings = AVCapturePhotoSettings()
-
+        
         let previewPixelType = settings.availablePreviewPhotoPixelFormatTypes.first!
         let previewFormat = [
             kCVPixelBufferPixelFormatTypeKey as String: previewPixelType,
             kCVPixelBufferWidthKey as String: 160,
             kCVPixelBufferHeightKey as String: 160
         ]
+        self.secondImage = false;
         settings.previewPhotoFormat = previewFormat
         stillImageOutput?.capturePhoto(with: settings, delegate: self)
-    
-    
+        
+        
         whiteImage.image = UIImage(named: "white")
-        //bool = false
+        
         timer = Timer.scheduledTimer(timeInterval: 0.3, target: self, selector: #selector(delayedAction), userInfo: nil, repeats: false)
-    
-}
+        
+    }
+
     // called every time interval from the timer
     func delayedAction() {
+        print("enter delayedAction")
         whiteImage.image = UIImage(named: "asfalt-light")
+        let settings = AVCapturePhotoSettings()
+        
+        let previewPixelType = settings.availablePreviewPhotoPixelFormatTypes.first!
+        let previewFormat = [
+            kCVPixelBufferPixelFormatTypeKey as String: previewPixelType,
+            kCVPixelBufferWidthKey as String: 160,
+            kCVPixelBufferHeightKey as String: 160
+        ]
+        self.secondImage = true;
+        settings.previewPhotoFormat = previewFormat
+        stillImageOutput?.capturePhoto(with: settings, delegate: self)
+        print("2nd image taken")
+
     }
 
     @IBAction func doLogout(_ sender: Any) {
         try! Auth.auth().signOut()
         performSegue(withIdentifier: "logout", sender: self)
     }
-    //call back from take picture
     
-func capture(_ stillImageOutput: AVCapturePhotoOutput,didFinishProcessingPhotoSampleBuffer photoSampleBuffer: CMSampleBuffer?, previewPhotoSampleBuffer: CMSampleBuffer?, resolvedSettings: AVCaptureResolvedPhotoSettings, bracketSettings: AVCaptureBracketedStillImageSettings?, error: Error?) {
+    //call back from take picture
+    func capture(_ stillImageOutput: AVCapturePhotoOutput,didFinishProcessingPhotoSampleBuffer photoSampleBuffer: CMSampleBuffer?, previewPhotoSampleBuffer: CMSampleBuffer?, resolvedSettings: AVCaptureResolvedPhotoSettings, bracketSettings: AVCaptureBracketedStillImageSettings?, error: Error?) {
         if let error = error {
             print("error occure : \(error.localizedDescription)")
         }
-        
-    if  let sampleBuffer = photoSampleBuffer,
-        let previewBuffer = previewPhotoSampleBuffer,
-        let dataImage =  AVCapturePhotoOutput.jpegPhotoDataRepresentation(forJPEGSampleBuffer:  sampleBuffer, previewPhotoSampleBuffer: previewBuffer) {
-        print(UIImage(data: dataImage)?.size as Any)
-        let dataProvider = CGDataProvider(data: dataImage as CFData)
-        let cgImageRef: CGImage! = CGImage(jpegDataProviderSource: dataProvider!, decode: nil, shouldInterpolate: true, intent: .defaultIntent)
-        
-        self.image = UIImage(cgImage: cgImageRef, scale: 1.0, orientation: UIImageOrientation.right)
-        self.capturedImage.image = self.image
-
-        
-        self.performSegue(withIdentifier: "showpicture", sender: self)
-    }
-    
-        
-           
-
-
-
-
-
+        if  let sampleBuffer = photoSampleBuffer,
+            let previewBuffer = previewPhotoSampleBuffer,
+            let dataImage =  AVCapturePhotoOutput.jpegPhotoDataRepresentation(forJPEGSampleBuffer:  sampleBuffer, previewPhotoSampleBuffer: previewBuffer) {
+            print("print inside capture:"+self.secondImage.description)
+            print(UIImage(data: dataImage)?.size as Any)
+            let dataProvider = CGDataProvider(data: dataImage as CFData)
+            let cgImageRef: CGImage! = CGImage(jpegDataProviderSource: dataProvider!, decode: nil, shouldInterpolate: true, intent: .defaultIntent)
             
-        
-        else {
+            if self.secondImage {
+                self.image2 = UIImage(cgImage: cgImageRef, scale: 1.0, orientation: UIImageOrientation.right)
+                print("2nd image done")
+                self.performSegue(withIdentifier: "showpicture", sender: self)
+            } else {
+                self.image = UIImage(cgImage: cgImageRef, scale: 1.0, orientation: UIImageOrientation.right)
+                self.capturedImage.image = self.image
+                print("1st image done")
+            }
+            
+        } else {
             print("Unknown Error")
         }
-
-}
+    }
     
     private func addObservers() {
         self.addObserver(self, forKeyPath: "device1.lensPosition", options: .new, context: &LensPositionContext)
@@ -482,14 +489,6 @@ func capture(_ stillImageOutput: AVCapturePhotoOutput,didFinishProcessingPhotoSa
         } else {
             self.addObserver(self, forKeyPath: "stillImageOutput.capturingStillImage", options: .new, context: &CapturingStillImageContext)
         }
-        
- /*       NotificationCenter.default.addObserver(self, selector: #selector(subjectAreaDidChange), name: .AVCaptureDeviceSubjectAreaDidChange, object: self.device1!)
-        NotificationCenter.default.addObserver(self, selector: #selector(sessionRuntimeError), name: .AVCaptureSessionRuntimeError, object: self.session)
- */
-        // A session can only run when the app is full screen. It will be interrupted in a multi-app layout, introduced in iOS 9,
-        // see also the documentation of AVCaptureSessionInterruptionReason. Add observers to handle these session interruptions
-        // and show a preview is paused message. See the documentation of AVCaptureSessionWasInterruptedNotification for other
-        // interruption reasons.
     }
     
     private func removeObservers() {
@@ -595,72 +594,25 @@ func capture(_ stillImageOutput: AVCapturePhotoOutput,didFinishProcessingPhotoSa
             super.observeValue(forKeyPath: keyPath, of: object, change: change, context: context)
         }
     }
-    
-    
+
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
         
         if segue.identifier == "showpicture" {
-        var capturedImage1 = UIImage()
+        //var capturedImage1 = UIImage()
 
         let destination = segue.destination as! capturedPhotoViewController
         destination.capturedImage1 = self.image
-        destination.capturedImage2 = self.image.imageFlippedForRightToLeftLayoutDirection()
+        destination.capturedImage2 = self.image2
+        print("prepare done for image1 and image2")
         // returns nil propertyfrom here
         //destination.navigationController!.setNavigationBarHidden(true, animated: false)
         }
     }
-    
-    
 
-
-/*override func prepare(for segue: UIStoryboardSegue, stillImageOutput: AVCapturePhotoOutput,didFinishProcessingPhotoSampleBuffer photoSampleBuffer: CMSampleBuffer?, previewPhotoSampleBuffer: CMSampleBuffer?, resolvedSettings: AVCaptureResolvedPhotoSettings, bracketSettings: AVCaptureBracketedStillImageSettings?, sender: Any?) {
-        let capturedImage1 = UIImage()
-        if  let sampleBuffer = photoSampleBuffer,
-            let previewBuffer = previewPhotoSampleBuffer,
-            let dataImage =  AVCapturePhotoOutput.jpegPhotoDataRepresentation(forJPEGSampleBuffer:  sampleBuffer, previewPhotoSampleBuffer: previewBuffer) {
-            print(UIImage(data: dataImage)?.size as Any)
-            let dataProvider = CGDataProvider(data: dataImage as CFData)
-            let cgImageRef: CGImage! = CGImage(jpegDataProviderSource: dataProvider!, decode: nil, shouldInterpolate: true, intent: .defaultIntent)
-            let image1 = UIImage(cgImage: cgImageRef, scale: 1.0, orientation: UIImageOrientation.right)
-            if let capturedcontroller = segue.destination as? capturedPhotoViewController {
-                capturedcontroller.capturedImage1 = image1
-            }
-
-        }
-        
-    }
-*/
-    
-/*
-func showPhoto(_ stillImageOutput: AVCapturePhotoOutput,didFinishProcessingPhotoSampleBuffer photoSampleBuffer: CMSampleBuffer?, previewPhotoSampleBuffer: CMSampleBuffer?, _ sender: Any) {
-        
-        let MainStory:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        let desVC: capturedPhotoViewController = MainStory.instantiateViewController(withIdentifier: "capturePhoto") as! capturedPhotoViewController
-        if  let sampleBuffer = photoSampleBuffer,
-            let previewBuffer = previewPhotoSampleBuffer,
-            let dataImage =  AVCapturePhotoOutput.jpegPhotoDataRepresentation(forJPEGSampleBuffer:  sampleBuffer, previewPhotoSampleBuffer: previewBuffer) {
-            print(UIImage(data: dataImage)?.size as Any)
-            let dataProvider = CGDataProvider(data: dataImage as CFData)
-            let cgImageRef: CGImage! = CGImage(jpegDataProviderSource: dataProvider!, decode: nil, shouldInterpolate: true, intent: .defaultIntent)
-            let image1 = UIImage(cgImage: cgImageRef, scale: 1.0, orientation: UIImageOrientation.right)
-            desVC.capturedImage1 = image1
-
-        }
-        
-        performSegue(withIdentifier: "showpicture", sender: self)
-
-    }
-    
-    
- */
     @IBAction func viewCapturedPhotos(_ sender: Any) {
         performSegue(withIdentifier: "viewCapturedPhotos", sender: self)
     }
-    
-
-
-    
 }
 

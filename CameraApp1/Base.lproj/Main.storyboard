@@ -376,11 +376,9 @@
                                 </constraints>
                             </view>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ha0-Pi-sgG">
-                                <rect key="frame" x="271" y="539" width="104" height="128"/>
+                                <rect key="frame" x="329" y="603" width="46" height="64"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="104" id="Vts-AE-VgG"/>
-                                    <constraint firstAttribute="width" constant="104" id="he7-yA-SNy"/>
-                                    <constraint firstAttribute="height" constant="128" id="pts-Rh-uPm"/>
+                                    <constraint firstAttribute="width" constant="46" id="oO2-vG-ocW"/>
                                 </constraints>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0W3-AY-2ur" customClass="RoundButton" customModule="CameraApp1" customModuleProvider="target">
@@ -421,10 +419,16 @@
                                     <segue destination="m1w-HL-yQV" kind="show" identifier="viewCapturedPhotos" id="7NL-Qo-8dK"/>
                                 </connections>
                             </button>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lt3-P7-3a7" customClass="AVCamManualPreviewView" customModule="CameraApp1" customModuleProvider="target">
+                            <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lt3-P7-3a7" customClass="AVCamManualPreviewView" customModule="CameraApp1" customModuleProvider="target">
                                 <rect key="frame" x="-54" y="76" width="423" height="391"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </view>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="HMQ-HL-i8W">
+                                <rect key="frame" x="282" y="619" width="39" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="39" id="sDP-Sh-oNq"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
@@ -433,23 +437,23 @@
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="0W3-AY-2ur" secondAttribute="bottom" constant="50" id="9p3-0e-hNE"/>
                             <constraint firstItem="sXm-XL-mKw" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" constant="-135.5" id="EAX-yK-dvF"/>
                             <constraint firstItem="gze-QS-fUA" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="9" id="EwG-AF-GtT"/>
+                            <constraint firstItem="ha0-Pi-sgG" firstAttribute="top" secondItem="q7s-1e-rZe" secondAttribute="bottom" constant="76" id="Gj6-i3-6rj"/>
                             <constraint firstItem="lt3-P7-3a7" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-70" id="GsX-jd-0si"/>
                             <constraint firstItem="q7s-1e-rZe" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" constant="174.5" id="HA0-5z-KaZ"/>
                             <constraint firstItem="q7s-1e-rZe" firstAttribute="top" secondItem="5KK-o8-RNf" secondAttribute="bottom" id="HHW-2U-I2d"/>
                             <constraint firstItem="0W3-AY-2ur" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Hh5-P3-5ME"/>
-                            <constraint firstItem="ha0-Pi-sgG" firstAttribute="bottom" secondItem="wfy-db-euE" secondAttribute="top" id="I1G-gs-hVN"/>
+                            <constraint firstItem="ha0-Pi-sgG" firstAttribute="leading" secondItem="HMQ-HL-i8W" secondAttribute="trailing" constant="8" symbolic="YES" id="IBV-wx-NKy"/>
                             <constraint firstItem="5KK-o8-RNf" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="J9D-qV-61n"/>
                             <constraint firstItem="0W3-AY-2ur" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="JYT-kb-CN5"/>
                             <constraint firstAttribute="trailing" secondItem="2vD-oW-hcg" secondAttribute="trailing" constant="7" id="Kgq-ro-r63"/>
                             <constraint firstItem="5KK-o8-RNf" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" constant="-89" id="NDN-2G-dhO"/>
                             <constraint firstItem="lt3-P7-3a7" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="56" id="Oyu-ch-Tws"/>
-                            <constraint firstItem="ha0-Pi-sgG" firstAttribute="top" secondItem="q7s-1e-rZe" secondAttribute="bottom" constant="12" id="TqH-1O-ekX"/>
-                            <constraint firstItem="ha0-Pi-sgG" firstAttribute="leading" secondItem="0W3-AY-2ur" secondAttribute="trailing" constant="59" id="U7R-J1-lEV"/>
+                            <constraint firstItem="HMQ-HL-i8W" firstAttribute="top" secondItem="sXm-XL-mKw" secondAttribute="top" id="Ww3-kI-km9"/>
                             <constraint firstItem="0W3-AY-2ur" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" constant="258.5" id="Xs2-la-h3A"/>
                             <constraint firstItem="sXm-XL-mKw" firstAttribute="leading" secondItem="5KK-o8-RNf" secondAttribute="leading" id="Z0G-pt-ZcI"/>
                             <constraint firstAttribute="trailing" secondItem="o7r-kt-xkj" secondAttribute="trailing" constant="7" id="aMR-tj-qsP"/>
-                            <constraint firstItem="ha0-Pi-sgG" firstAttribute="top" secondItem="lt3-P7-3a7" secondAttribute="bottom" constant="72" id="enh-8E-awU"/>
                             <constraint firstAttribute="bottom" secondItem="0W3-AY-2ur" secondAttribute="bottom" constant="50" id="epR-dS-pKK"/>
+                            <constraint firstItem="ha0-Pi-sgG" firstAttribute="bottom" secondItem="wfy-db-euE" secondAttribute="top" id="fB7-Nu-4Uy"/>
                             <constraint firstAttribute="trailing" secondItem="YTp-21-GvA" secondAttribute="trailing" id="gBw-Yr-X8Y"/>
                             <constraint firstItem="sXm-XL-mKw" firstAttribute="bottom" secondItem="wfy-db-euE" secondAttribute="top" id="gj8-uB-qZG"/>
                             <constraint firstItem="czL-vD-y6j" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="9" id="h8I-Ha-4KU"/>
@@ -460,16 +464,18 @@
                             <constraint firstItem="sXm-XL-mKw" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" constant="309.5" id="o8N-G1-4ZJ"/>
                             <constraint firstItem="0W3-AY-2ur" firstAttribute="top" secondItem="5KK-o8-RNf" secondAttribute="bottom" constant="78" id="okg-cK-gh5"/>
                             <constraint firstAttribute="trailingMargin" secondItem="q7s-1e-rZe" secondAttribute="trailing" constant="-7" id="qUp-Ib-r66"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="HMQ-HL-i8W" secondAttribute="bottom" constant="4" id="sE5-HQ-Pl4"/>
                             <constraint firstItem="lt3-P7-3a7" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" constant="76" id="scb-XR-M9c"/>
                             <constraint firstAttribute="trailingMargin" secondItem="lt3-P7-3a7" secondAttribute="trailing" constant="-10" id="stc-3I-FV0"/>
                             <constraint firstItem="ukc-6D-vNl" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="9" id="tPr-jy-gBZ"/>
+                            <constraint firstItem="ha0-Pi-sgG" firstAttribute="trailing" secondItem="5KK-o8-RNf" secondAttribute="trailing" id="tTc-nE-MMK"/>
                             <constraint firstItem="sXm-XL-mKw" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="1" id="yZ1-PU-ZeW"/>
-                            <constraint firstItem="ha0-Pi-sgG" firstAttribute="trailing" secondItem="5KK-o8-RNf" secondAttribute="trailing" id="zq0-wd-oWP"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="cameraButton" destination="0W3-AY-2ur" id="H80-jR-gmi"/>
                         <outlet property="capturedImage" destination="ha0-Pi-sgG" id="IFV-ON-fFh"/>
+                        <outlet property="capturedImage2" destination="HMQ-HL-i8W" id="Nie-VF-mSW"/>
                         <outlet property="durationLabel" destination="czL-vD-y6j" id="ONM-G8-qYD"/>
                         <outlet property="exposureDurationSlider" destination="DqQ-QI-EPZ" id="taQ-MO-XcY"/>
                         <outlet property="exposureDurationValue" destination="kRW-S8-1lu" id="RxZ-M5-66M"/>
@@ -1358,9 +1364,9 @@
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="pFL-HL-gD3"/>
-        <segue reference="h1Q-Nh-5sE"/>
-        <segue reference="k5Z-gU-kTg"/>
+        <segue reference="7NL-Qo-8dK"/>
         <segue reference="OAj-16-HYt"/>
+        <segue reference="k5Z-gU-kTg"/>
         <segue reference="Xz7-rX-xpt"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.89301614419999997" green="1" blue="0.85109981349999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
