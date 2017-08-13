@@ -606,7 +606,7 @@ func capture(_ stillImageOutput: AVCapturePhotoOutput,didFinishProcessingPhotoSa
 
         let destination = segue.destination as! capturedPhotoViewController
         destination.capturedImage1 = self.image
-        destination.capturedImage2 = self.image
+        destination.capturedImage2 = self.image.imageFlippedForRightToLeftLayoutDirection()
         // returns nil propertyfrom here
         //destination.navigationController!.setNavigationBarHidden(true, animated: false)
         }

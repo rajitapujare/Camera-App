@@ -745,6 +745,7 @@
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="aqb-40-puV">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <gestureRecognizers/>
                             </imageView>
                             <navigationBar contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jxJ-cP-vIS">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -768,19 +769,36 @@
                             </navigationBar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="aqb-40-puV" firstAttribute="leading" secondItem="D0t-eB-qZ7" secondAttribute="leading" id="5nO-et-39U"/>
                             <constraint firstItem="aqb-40-puV" firstAttribute="bottom" secondItem="q8j-kJ-Jkf" secondAttribute="top" id="KBm-Cy-UKP"/>
                             <constraint firstAttribute="trailing" secondItem="aqb-40-puV" secondAttribute="trailing" id="ddx-VR-TIy"/>
                             <constraint firstItem="aqb-40-puV" firstAttribute="top" secondItem="D0t-eB-qZ7" secondAttribute="top" id="odG-P9-h4i"/>
                         </constraints>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="RoP-oH-BUY" appends="YES" id="aCF-tS-00G"/>
+                            <outletCollection property="gestureRecognizers" destination="yZM-4b-rPz" appends="YES" id="SMo-rS-uYx"/>
+                        </connections>
                     </view>
                     <navigationItem key="navigationItem" title="Title" id="Ggr-6H-OmM"/>
                     <connections>
                         <outlet property="capturedImageView" destination="aqb-40-puV" id="mSa-uB-WI3"/>
+                        <outlet property="leftPictureSwipe" destination="yZM-4b-rPz" id="4C0-zL-GeC"/>
+                        <outlet property="pictureSwipe" destination="RoP-oH-BUY" id="E6f-Tz-Xb5"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iv4-Kz-pU8" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <swipeGestureRecognizer direction="right" id="RoP-oH-BUY">
+                    <connections>
+                        <action selector="swipeThroughPhotos:" destination="evb-EY-Ci1" id="xL7-Ea-q7m"/>
+                    </connections>
+                </swipeGestureRecognizer>
+                <swipeGestureRecognizer direction="left" id="yZM-4b-rPz">
+                    <connections>
+                        <action selector="leftPhotoSwipe:" destination="evb-EY-Ci1" id="1nR-c2-NIP"/>
+                    </connections>
+                </swipeGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="1601" y="1276"/>
         </scene>

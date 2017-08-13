@@ -8,19 +8,44 @@
 
 import UIKit
 
+
 class capturedPhotoViewController: UIViewController {
+    var index = 0
+    var myArray:[String] = ["capturedImage1", "capturedImage2"]
+
+
+    
+    @IBOutlet var leftPictureSwipe: UISwipeGestureRecognizer!
+    @IBOutlet var pictureSwipe: UISwipeGestureRecognizer!
     var capturedImage1 = UIImage()
     var capturedImage2 = UIImage()
-    
+    let red = UIImage(named: "redimage")
+
     @IBOutlet weak var capturedImageView: UIImageView!
     
 
     override func viewDidLoad() {
         super.viewDidLoad()
         capturedImageView.image = capturedImage1
+//        swiped(gesture: pictureSwipe)
 
         // Do any additional setup after loading the view.
     }
+    
+    @IBAction func swipeThroughPhotos(_ sender: Any) {
+        
+        
+            print("User swiped right")
+            capturedImageView.image = capturedImage2
+       
+    }
+    
+    @IBAction func leftPhotoSwipe(_ sender: Any) {
+        print("User swiped left")
+        capturedImageView.image = #imageLiteral(resourceName: "redimage")
+
+    }
+
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
@@ -36,6 +61,7 @@ class capturedPhotoViewController: UIViewController {
         }
     }
 
+    
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
