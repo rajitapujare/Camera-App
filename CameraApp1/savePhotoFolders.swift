@@ -104,10 +104,10 @@ class savePhotoFolders: UITableViewController, UIAlertViewDelegate {
                         print("Error creating /\(body)/\(input)/\(self.timestamp) folder in documents dir: \(error)")
                     }
                     
-                    func saveMyImageToDocumentDirectory(_ capturedImage2: UIImage) -> String {
+                    func saveMyImageToDocumentDirectory(_ capturedImage2: UIImage, _ fileName: String) -> String {
                         print("saveImageToDocumentDirectory 0");
                         let docsurl = try! self.fm.url(for:.documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
-                        let myurl = docsurl.appendingPathComponent(body + "/" + input! + "/\(self.timestampString)" + "/image1.jpg");
+                        let myurl = docsurl.appendingPathComponent(body + "/" + input! + "/\(self.timestampString)" + "/" + fileName);
                         let  newDirectoryPath = documentDirectoryPath.appending("/" + body)
                         
                         print("saveImageToDocumentDirectory 1")
@@ -158,7 +158,8 @@ class savePhotoFolders: UITableViewController, UIAlertViewDelegate {
                         }
                     }
                     
-                    saveMyImageToDocumentDirectory(self.capturedImage2);
+                    saveMyImageToDocumentDirectory(self.capturedImage2, "image1.jpg");
+                    saveMyImageToDocumentDirectory(self.capturedImage2, "image2.jpg");
                     
                 }
                 
