@@ -10,7 +10,7 @@ import UIKit
 
 class capturedPhotoViewController: UIViewController {
     var capturedImage1 = UIImage()
-
+    var capturedImage2 = UIImage()
     
     @IBOutlet weak var capturedImageView: UIImageView!
     
@@ -30,6 +30,7 @@ class capturedPhotoViewController: UIViewController {
         
         let destination = segue.destination as! savePhotoFolders
         destination.capturedImage2 = self.capturedImage1
+        destination.capturedImage3 = self.capturedImage2
         // returns nil propertyfrom here
         //destination.navigationController!.setNavigationBarHidden(true, animated: false)
         }

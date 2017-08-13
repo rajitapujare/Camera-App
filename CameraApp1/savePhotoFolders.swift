@@ -12,6 +12,7 @@ import Foundation
 
 class savePhotoFolders: UITableViewController, UIAlertViewDelegate {
     var capturedImage2 = UIImage()
+    var capturedImage3 = UIImage()
     let fm = FileManager.default
     
     @IBOutlet weak var headButton: UIButton!
@@ -159,7 +160,7 @@ class savePhotoFolders: UITableViewController, UIAlertViewDelegate {
                     }
                     
                     saveMyImageToDocumentDirectory(self.capturedImage2, "image1.jpg");
-                    saveMyImageToDocumentDirectory(self.capturedImage2, "image2.jpg");
+                    saveMyImageToDocumentDirectory(self.capturedImage3, "image2.jpg");
                     
                 }
                 
