@@ -79,5 +79,101 @@
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "CameraApp1/ViewController.swift"
+            timestampString = "524560236.382096"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "438"
+            endingLineNumber = "438"
+            landmarkName = "photoOutput(_:didFinishProcessingPhoto:previewPhoto:resolvedSettings:bracketSettings:error:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "CameraApp1.ViewController.photoOutput (__ObjC.AVCapturePhotoOutput, didFinishProcessingPhoto : Swift.Optional&lt;__ObjC.CMSampleBuffer&gt;, previewPhoto : Swift.Optional&lt;__ObjC.CMSampleBuffer&gt;, resolvedSettings : __ObjC.AVCaptureResolvedPhotoSettings, bracketSettings : Swift.Optional&lt;__ObjC.AVCaptureBracketedStillImageSettings&gt;, error : Swift.Optional&lt;Swift.Error&gt;) -&gt; ()"
+                  moduleName = "CameraApp1"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/rajitapujare/Desktop/CameraApp1/CameraApp1/ViewController.swift"
+                  timestampString = "524561072.533118"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "438"
+                  endingLineNumber = "438"
+                  offsetFromSymbolStart = "68">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "CameraApp1.ViewController.photoOutput (__ObjC.AVCapturePhotoOutput, didFinishProcessingPhoto : Swift.Optional&lt;__ObjC.CMSampleBuffer&gt;, previewPhoto : Swift.Optional&lt;__ObjC.CMSampleBuffer&gt;, resolvedSettings : __ObjC.AVCaptureResolvedPhotoSettings, bracketSettings : Swift.Optional&lt;__ObjC.AVCaptureBracketedStillImageSettings&gt;, error : Swift.Optional&lt;Swift.Error&gt;) -&gt; ()"
+                  moduleName = "CameraApp1"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/rajitapujare/Desktop/CameraApp1/CameraApp1/ViewController.swift"
+                  timestampString = "524561072.535547"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "438"
+                  endingLineNumber = "438"
+                  offsetFromSymbolStart = "132">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "CameraApp1/ViewController.swift"
+            timestampString = "524560238.378194"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "450"
+            endingLineNumber = "450"
+            landmarkName = "photoOutput(_:didFinishProcessingRawPhoto:previewPhoto:resolvedSettings:bracketSettings:error:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "CameraApp1.ViewController.photoOutput (__ObjC.AVCapturePhotoOutput, didFinishProcessingRawPhoto : Swift.Optional&lt;__ObjC.CMSampleBuffer&gt;, previewPhoto : Swift.Optional&lt;__ObjC.CMSampleBuffer&gt;, resolvedSettings : __ObjC.AVCaptureResolvedPhotoSettings, bracketSettings : Swift.Optional&lt;__ObjC.AVCaptureBracketedStillImageSettings&gt;, error : Swift.Optional&lt;Swift.Error&gt;) -&gt; ()"
+                  moduleName = "CameraApp1"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/rajitapujare/Desktop/CameraApp1/CameraApp1/ViewController.swift"
+                  timestampString = "524561072.542271"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "450"
+                  endingLineNumber = "450"
+                  offsetFromSymbolStart = "68">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "CameraApp1.ViewController.photoOutput (__ObjC.AVCapturePhotoOutput, didFinishProcessingRawPhoto : Swift.Optional&lt;__ObjC.CMSampleBuffer&gt;, previewPhoto : Swift.Optional&lt;__ObjC.CMSampleBuffer&gt;, resolvedSettings : __ObjC.AVCaptureResolvedPhotoSettings, bracketSettings : Swift.Optional&lt;__ObjC.AVCaptureBracketedStillImageSettings&gt;, error : Swift.Optional&lt;Swift.Error&gt;) -&gt; ()"
+                  moduleName = "CameraApp1"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/rajitapujare/Desktop/CameraApp1/CameraApp1/ViewController.swift"
+                  timestampString = "524561072.544594"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "450"
+                  endingLineNumber = "450"
+                  offsetFromSymbolStart = "132">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
    </Breakpoints>
 </Bucket>

@@ -408,7 +408,10 @@ private func configureSession() {
     }
     
     @IBAction func pressCamera(_ sender: Any) {
-        let settings = AVCapturePhotoSettings()
+        let rawFormat = 0
+        let makeSettings = AVCaptureAutoExposureBracketedStillImageSettings.autoExposureSettings
+        let bracketedStillImageSettings = [2, 2].map { makeSettings(Float($0))! }
+        let settings = AVCapturePhotoBracketSettings(rawPixelFormatType: OSType(rawFormat), processedFormat: nil, bracketedSettings: bracketedStillImageSettings)
         
         let previewPixelType = settings.availablePreviewPhotoPixelFormatTypes.first!
         let previewFormat = [
@@ -423,7 +426,30 @@ private func configureSession() {
         
         whiteImage.image = UIImage(named: "white")
 
-        timer = Timer.scheduledTimer(timeInterval: 0.3, target: self, selector: #selector(delayedAction), userInfo: nil, repeats: false)
+        //timer = Timer.scheduledTimer(timeInterval: 0.3, target: self, selector: #selector(delayedAction), userInfo: nil, repeats: false)
+    }
+    
+    func photoOutput(_ output: AVCapturePhotoOutput,
+                          didFinishProcessingPhoto photoSampleBuffer: CMSampleBuffer?,
+                          previewPhoto previewPhotoSampleBuffer: CMSampleBuffer?,
+                          resolvedSettings: AVCaptureResolvedPhotoSettings,
+                          bracketSettings: AVCaptureBracketedStillImageSettings?,
+                          error: Error?){
+        if let error = error {
+            print("error occure : \(error.localizedDescription)")
+        }
+        
+    }
+    
+    func photoOutput(_ output: AVCapturePhotoOutput,
+                     didFinishProcessingRawPhoto rawSampleBuffer: CMSampleBuffer?,
+                     previewPhoto previewPhotoSampleBuffer: CMSampleBuffer?,
+                     resolvedSettings: AVCaptureResolvedPhotoSettings,
+                     bracketSettings: AVCaptureBracketedStillImageSettings?,
+                     error: Error?){
+        if let error = error {
+            print("error occure : \(error.localizedDescription)")
+        }
     }
 
     // called every time interval from the timer
@@ -471,6 +497,7 @@ private func configureSession() {
                 self.image = UIImage(cgImage: cgImageRef, scale: 1.0, orientation: UIImageOrientation.right)
                 self.capturedImage.image = self.image
                 print("1st image done")
+                self.secondImage = true;
             }
             
         } else {
