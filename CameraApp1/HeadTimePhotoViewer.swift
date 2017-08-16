@@ -96,6 +96,46 @@ class HeadTimePhotoViewer: UITableViewController {
         
         
     }
+    
+    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        if (editingStyle == UITableViewCellEditingStyle.delete) {
+            
+            let myCell = timestampList.cellForRow(at: indexPath) as UITableViewCell!
+            
+            let timestamp = myCell?.textLabel?.text
+            
+            
+            let docsurl = try! fm.url(for:.documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
+ /*
+            let myurl = docsurl.appendingPathComponent(HeadTimePhotoViewer.name2)
+            let myurl2 = myurl.appendingPathComponent(timestamp!)
+*/
+            let text2 = myCell?.textLabel?.text
+            
+            let path = HeadTimePhotoViewer.name2 + "/" + text2!;
+            var urlString: String = path
+
+            
+            //            var items = try! fm.contentsOfDirectory(atPath: urlString)
+            do {
+                let items = try! fm.contentsOfDirectory(atPath: urlString)
+                print(items)
+                try self.fm.removeItem(atPath: urlString)
+                timestampList.reloadData()
+                
+            } catch {
+                print("Could not delete \(timestamp) folder: \(error)")
+            }
+            
+            
+            // handle delete (by removing the data from your array and updating the tableview)
+        }
+    }
+
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.

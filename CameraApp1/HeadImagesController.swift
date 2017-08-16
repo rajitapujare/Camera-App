@@ -33,13 +33,22 @@ class HeadImagesController: UITableViewController {
     var text = String()
     var filecontent = [String]()
     var filecontent1 = [String]()
+    let lightColor: UIColor = UIColor(red: 0.996, green: 0.467, blue: 0.224, alpha: 1)
+
 
     @IBOutlet var tableviewoptions: UITableView!
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
+        
         tableviewoptions.dataSource = self
         self.tableviewoptions.register(UITableViewCell.self, forCellReuseIdentifier: "cell1")
+        self.tableviewoptions.backgroundColor = lightColor
 
+        
+        
+        
         let docsurl = try! fm.url(for:.documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
         let myurl = docsurl.appendingPathComponent(HeadImagesController.bodypart)
         var urlString: String = myurl.path
@@ -163,10 +172,51 @@ override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: Inde
     let currentCell = tableView.cellForRow(at: indexPath!)!
     self.text = currentCell.textLabel!.text!
 */
+    let mySelectedCell:UITableViewCell = tableView.cellForRow(at: indexPath)!
+    
+    //Colors
+    
+    mySelectedCell.detailTextLabel?.textColor = UIColor.white
+    mySelectedCell.tintColor = UIColor.white
+    
+
     self.performSegue(withIdentifier: "showpics1", sender: self)
 
 
 }
+    
+    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        if (editingStyle == UITableViewCellEditingStyle.delete) {
+            
+            let myCell = tableviewoptions.cellForRow(at: indexPath) as UITableViewCell!
+
+            let bodypartname = myCell?.textLabel?.text
+
+            
+            let docsurl = try! fm.url(for:.documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
+            let myurl = docsurl.appendingPathComponent(HeadImagesController.bodypart)
+            let myurl2 = myurl.appendingPathComponent(bodypartname!)
+            
+            var urlString: String = myurl2.path
+//            var items = try! fm.contentsOfDirectory(atPath: urlString)
+            do {
+                let items = try! fm.contentsOfDirectory(atPath: urlString)
+                print(items)
+                try self.fm.removeItem(atPath: urlString)
+                tableviewoptions.reloadData()
+                
+            } catch {
+                print("Could not delete \(bodypartname) folder: \(error)")
+            }
+
+
+            // handle delete (by removing the data from your array and updating the tableview)
+        }
+    }
 
 override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
