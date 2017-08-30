@@ -113,6 +113,8 @@ class savePhotoFolders: UITableViewController, UIAlertViewDelegate {
                     saveMyImageToDocumentDirectory(self.capturedImage2, "image1.jpg");
                     saveMyImageToDocumentDirectory(self.capturedImage3, "image2.jpg");
                     
+ //                   performSegue(withIdentifier: "gobacktohome", sender: <#Any?#>)
+
                 }
                 
             }

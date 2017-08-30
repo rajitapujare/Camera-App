@@ -22,7 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         self.window = UIWindow(frame: UIScreen.main.bounds)
       let mainStoryboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        let exampleViewController: SecondViewController = mainStoryboard.instantiateViewController(withIdentifier: "SignUp") as! SecondViewController
+        let exampleViewController: ViewController = mainStoryboard.instantiateViewController(withIdentifier: "Home") as! ViewController
         
         self.window?.rootViewController = exampleViewController
         

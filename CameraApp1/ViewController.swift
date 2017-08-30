@@ -17,6 +17,13 @@ private var ExposureDurationContext = 0
 private var ISOContext = 0
 private var DeviceWhiteBalanceGainsContext = 0
 
+private protocol AVCaptureDeviceDiscoverySessionType: class {
+    @available(iOS 10.0, *)
+    var devices: [AVCaptureDevice]! { get }
+}
+
+@available(iOS 10.0, *)
+extension AVCaptureDeviceDiscoverySession: AVCaptureDeviceDiscoverySessionType {}
 
 class ViewController: UIViewController, AVCapturePhotoCaptureDelegate {
     
@@ -63,11 +70,15 @@ class ViewController: UIViewController, AVCapturePhotoCaptureDelegate {
     @IBOutlet weak var switchSetting: UISegmentedControl!
     private var isSessionRunning: Bool = false
     private var backgroundRecordingID: UIBackgroundTaskIdentifier = UIBackgroundTaskInvalid
-    let device1 = AVCaptureDevice.defaultDevice(withMediaType: AVMediaTypeVideo)
+    dynamic var videoDeviceInput: AVCaptureDeviceInput?
+    private var videoDeviceDiscoverySession: AVCaptureDeviceDiscoverySessionType?
+
+    dynamic var device1 = AVCaptureDevice.defaultDevice(withMediaType: AVMediaTypeVideo)
     dynamic var session: AVCaptureSession!
     dynamic var stillImageOutput: AVCapturePhotoOutput?
     var previewViewLayer: AVCaptureVideoPreviewLayer?
     var sessionQueue: DispatchQueue!
+//    private var setupResult: AVCamManualSetupResult = .success
     private let kExposureDurationPower = 5.0
     private let kExposureMinimumDuration = 1.0/1000
     var timer = Timer()
@@ -87,6 +98,7 @@ class ViewController: UIViewController, AVCapturePhotoCaptureDelegate {
         self.exposureHUD.isHidden = true
         self.whitebalanceHUD.isHidden = true
 
+        
         view.backgroundColor = .black
         print(Auth.auth().currentUser?.email! as Any)
         session = AVCaptureSession()
@@ -98,6 +110,10 @@ class ViewController: UIViewController, AVCapturePhotoCaptureDelegate {
         self.view.sendSubview(toBack: previewView1)
 
 
+        if #available(iOS 10.0, *) {
+            let deviceTypes: [AVCaptureDeviceType] = [.builtInWideAngleCamera, .builtInDuoCamera, .builtInTelephotoCamera]
+            self.videoDeviceDiscoverySession = AVCaptureDeviceDiscoverySession(deviceTypes: deviceTypes, mediaType: AVMediaTypeVideo, position: .unspecified)
+        }
 
 
 
@@ -121,6 +137,48 @@ class ViewController: UIViewController, AVCapturePhotoCaptureDelegate {
         }
  
 }
+    
+    /*
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        self.sessionQueue.async {
+            switch self.setupResult {
+            case .success:
+                // Only setup observers and start the session running if setup succeeded.
+                self.addObservers()
+                self.session.startRunning()
+                self.isSessionRunning = self.session.isRunning
+            case .cameraNotAuthorized:
+                DispatchQueue.main.async {
+                    let message = NSLocalizedString("AVCamManual doesn't have permission to use the camera, please change privacy settings", comment: "Alert message when the user has denied access to the camera" )
+                    let alertController = UIAlertController(title: "AVCamManual", message: message, preferredStyle: .alert)
+                    let cancelAction = UIAlertAction(title: NSLocalizedString("OK", comment: "Alert OK button"), style: .cancel, handler: nil)
+                    alertController.addAction(cancelAction)
+                    // Provide quick access to Settings.
+                    let settingsAction = UIAlertAction(title: NSLocalizedString("Settings", comment: "Alert button to open Settings"), style: .default) {action in
+                        if #available(iOS 10.0, *) {
+                            UIApplication.shared.open(URL(string: UIApplicationOpenSettingsURLString)!)
+                        } else {
+                            UIApplication.shared.openURL(URL(string: UIApplicationOpenSettingsURLString)!)
+                        }
+                    }
+                    alertController.addAction(settingsAction)
+                    self.present(alertController, animated: true, completion: nil)
+                }
+            case .sessionConfigurationFailed:
+                DispatchQueue.main.async {
+                    let message = NSLocalizedString("Unable to capture media", comment: "Alert message when something goes wrong during capture session configuration")
+                    let alertController = UIAlertController(title: "AVCamManual", message: message, preferredStyle: .alert)
+                    let cancelAction = UIAlertAction(title: NSLocalizedString("OK", comment: "Alert OK button"), style: .cancel, handler: nil)
+                    alertController.addAction(cancelAction)
+                    self.present(alertController, animated: true, completion: nil)
+                }
+            }
+        }
+    }
+ */
+
 @IBAction func changeHUD(_ sender: Any) {
     
     if switchSetting.selectedSegmentIndex == 0 {
@@ -235,8 +293,8 @@ private func configureManualHUD() {
     
     }
     
-
-/*private func set(_ slider: UISlider, highlight color: UIColor) {
+/*
+private func set(_ slider: UISlider, highlight color: UIColor) {
         slider.tintColor = color
         
         if slider === self.focusPositionSlider {
@@ -256,6 +314,7 @@ private func configureManualHUD() {
             self.tintValue.textColor = slider.tintColor
         }
     }
+
 @IBAction func sliderTouchBegan(_ slider: UISlider) {
         self.set(slider, highlight: UIColor(red: 0.0, green: 122.0/255.0, blue: 1.0, alpha: 1.0))
     }
@@ -358,19 +417,6 @@ private func configureSession() {
         }
     }
 
-    private func normalizedGains(_ gains: AVCaptureWhiteBalanceGains) -> AVCaptureWhiteBalanceGains {
-        var g = gains
-        
-        g.redGain = max(1.0, g.redGain)
-        g.greenGain = max(1.0, g.greenGain)
-        g.blueGain = max(1.0, g.blueGain)
-        
-        g.redGain = min(self.device1!.maxWhiteBalanceGain, g.redGain)
-        g.greenGain = min(self.device1!.maxWhiteBalanceGain, g.greenGain)
-        g.blueGain = min(self.device1!.maxWhiteBalanceGain, g.blueGain)
-        
-        return g
-    }
     
     
     private func setWhiteBalanceGains(_ gains: AVCaptureWhiteBalanceGains) {
@@ -400,6 +446,25 @@ private func configureSession() {
         )
         
         self.setWhiteBalanceGains(self.device1!.deviceWhiteBalanceGains(for: temperatureAndTint))
+    }
+    private func normalizedGains(_ gains: AVCaptureWhiteBalanceGains) -> AVCaptureWhiteBalanceGains {
+        var g = gains
+/*
+        var incandescentLightCompensation = 3_000
+        var tint = 0 // no shift
+        let tempAndTintValues = AVCaptureWhiteBalanceTemperatureAndTintValues(temperature: Float(incandescentLightCompensation), tint: Float(tint))
+        g = (device1?.deviceWhiteBalanceGains(for: tempAndTintValues))!
+*/
+ 
+        g.redGain = max(1.0, g.redGain)
+        g.greenGain = max(1.0, g.greenGain)
+        g.blueGain = max(1.0, g.blueGain)
+        
+        g.redGain = min(self.device1!.maxWhiteBalanceGain, g.redGain)
+        g.greenGain = min(self.device1!.maxWhiteBalanceGain, g.greenGain)
+        g.blueGain = min(self.device1!.maxWhiteBalanceGain, g.blueGain)
+   
+        return g
     }
 
     override func didReceiveMemoryWarning() {
