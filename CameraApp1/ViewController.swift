@@ -16,6 +16,8 @@ private var LensPositionContext = 0
 private var ExposureDurationContext = 0
 private var ISOContext = 0
 private var DeviceWhiteBalanceGainsContext = 0
+private var ExposureTargetBiasContext = 0
+private var ExposureTargetOffsetContext = 0
 
 private protocol AVCaptureDeviceDiscoverySessionType: class {
     @available(iOS 10.0, *)
@@ -69,6 +71,10 @@ class ViewController: UIViewController, AVCapturePhotoCaptureDelegate {
     @IBOutlet weak var logOut: UIButton!
     @IBOutlet weak var switchSetting: UISegmentedControl!
     private var isSessionRunning: Bool = false
+    
+    @IBOutlet weak var biasSlider: UISlider!
+    @IBOutlet weak var offsetSlider: UISlider!
+    
     private var backgroundRecordingID: UIBackgroundTaskIdentifier = UIBackgroundTaskInvalid
     dynamic var videoDeviceInput: AVCaptureDeviceInput?
     private var videoDeviceDiscoverySession: AVCaptureDeviceDiscoverySessionType?
@@ -271,10 +277,24 @@ private func configureManualHUD() {
         // Map from duration to non-linear UI range 0-1
         let p = (exposureDurationSeconds - minExposureDurationSeconds) / (maxExposureDurationSeconds - minExposureDurationSeconds) // Scale to 0-1
         self.exposureDurationSlider.value = Float(pow(p, 1 / kExposureDurationPower)) // Apply inverse power
+        self.exposureDurationSlider.isEnabled = false
     
         self.exposureISOSlider.minimumValue = self.device1?.activeFormat.minISO ?? 0.0
         self.exposureISOSlider.maximumValue = self.device1?.activeFormat.maxISO ?? 0.0
         self.exposureISOSlider.value = self.device1?.iso ?? 0.0
+        self.exposureISOSlider.isEnabled = false
+    
+        self.biasSlider.minimumValue = self.device1?.minExposureTargetBias ?? 0.0
+        self.biasSlider.maximumValue = self.device1?.maxExposureTargetBias ?? 0.0
+        self.biasSlider.value = self.device1?.exposureTargetBias ?? 0.0
+        self.biasSlider.isEnabled = true
+    
+        self.offsetSlider.minimumValue = self.device1?.minExposureTargetBias ?? 0.0
+        self.offsetSlider.maximumValue = self.device1?.maxExposureTargetBias ?? 0.0
+        self.offsetSlider.value = self.device1?.exposureTargetOffset ?? 0.0
+        self.offsetSlider.isEnabled = false
+
+
     
         // Manual white balance controls
     
@@ -399,7 +419,7 @@ private func configureSession() {
         
         do {
             try self.device1!.lockForConfiguration()
-            self.device1!.setExposureModeCustomWithDuration(CMTimeMakeWithSeconds(newDurationSeconds, 1000*1000*1000), iso: AVCaptureISOCurrent, completionHandler: nil)
+ //           self.device1!.setExposureModeCustomWithDuration(CMTimeMakeWithSeconds(newDurationSeconds, 1000*1000*1000), iso: AVCaptureISOCurrent, completionHandler: nil)
             self.device1!.unlockForConfiguration()
         } catch let error {
             NSLog("Could not lock device for configuration: \(error)")
@@ -410,13 +430,23 @@ private func configureSession() {
         
         do {
             try self.device1!.lockForConfiguration()
-            self.device1!.setExposureModeCustomWithDuration(AVCaptureExposureDurationCurrent, iso: control.value, completionHandler: nil)
+//            self.device1!.setExposureModeCustomWithDuration(AVCaptureExposureDurationCurrent, iso: control.value, completionHandler: nil)
             self.device1!.unlockForConfiguration()
         } catch let error {
             NSLog("Could not lock device for configuration: \(error)")
         }
     }
 
+    @IBAction func changeExposureTargetBias(_ control: UISlider) {
+        do {
+            try self.device1!.lockForConfiguration()
+            self.device1!.setExposureTargetBias(control.value, completionHandler: nil)
+            self.device1!.unlockForConfiguration()
+        } catch let error {
+            NSLog("Could not lock device for configuration: \(error)")
+        }
+
+    }
     
     
     private func setWhiteBalanceGains(_ gains: AVCaptureWhiteBalanceGains) {
@@ -472,10 +502,15 @@ private func configureSession() {
         // Dispose of any resources that can be recreated.
     }
     
+    @available(iOS 10.0, *)
     @IBAction func pressCamera(_ sender: Any) {
         let rawFormat = 0
         let makeSettings = AVCaptureAutoExposureBracketedStillImageSettings.autoExposureSettings
         let bracketedStillImageSettings = [2, 2].map { makeSettings(Float($0))! }
+        let bracketedSettings: [AVCaptureBracketedStillImageSettings]
+        bracketedSettings = [AVCaptureAutoExposureBracketedStillImageSettings.autoExposureSettings(withExposureTargetBias: AVCaptureExposureTargetBiasCurrent)]
+
+
         let settings = AVCapturePhotoBracketSettings(rawPixelFormatType: OSType(rawFormat), processedFormat: nil, bracketedSettings: bracketedStillImageSettings)
         
         let previewPixelType = settings.availablePreviewPhotoPixelFormatTypes.first!
@@ -664,6 +699,22 @@ private func configureSession() {
                     self.tintValue.text = String(Int(newTemperatureAndTint.tint))
                 }
             }
+        case &ExposureTargetBiasContext:
+            if let value = newValue as? Float {
+                let newExposureTargetBias = value
+                DispatchQueue.main.async {
+                    //self.exposureTargetBiasValueLabel.text = String(format: "%.1f", Double(newExposureTargetBias))
+                }
+            }
+        case &ExposureTargetOffsetContext:
+            if let value = newValue as? Float {
+                let newExposureTargetOffset = value
+                DispatchQueue.main.async {
+                    self.offsetSlider.value = newExposureTargetOffset
+                    //self.exposureTargetOffsetValueLabel.text = String(format: "%.1f", Double(newExposureTargetOffset))
+                }
+            }
+
         case &CapturingStillImageContext:
             if #available(iOS 10.0, *) {
             } else {
