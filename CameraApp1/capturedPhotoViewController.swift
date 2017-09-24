@@ -26,7 +26,6 @@ class capturedPhotoViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         capturedImageView.image = capturedImage1
-//        swiped(gesture: pictureSwipe)
 
         // Do any additional setup after loading the view.
     }

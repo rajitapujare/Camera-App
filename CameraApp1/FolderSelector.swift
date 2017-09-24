@@ -18,19 +18,10 @@ class FolderSelector: UITableViewController {
         
         
         if (segue.identifier == "segue1") {
-            //if let indexPath = self.bodypartstable.indexPathForSelectedRow {
-                
-                // get the cell associated with the indexPath selected.
-                //let cell = self.bodypartstable.cellForRow(at: indexPath) as UITableViewCell!
-                
-                // get the label text to pass to destinationController
-                //let text1 = cell?.textLabel?.text;
-                //let text1 = "\(cell?.textLabel?.text)"
-                
+            
                 
                 let destinationController = segue.destination as! HeadImagesController
                 HeadImagesController.bodypart = self.buttonClicked;
-            //}
         }
     }
 

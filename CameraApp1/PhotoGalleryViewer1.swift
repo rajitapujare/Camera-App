@@ -9,14 +9,6 @@
 import UIKit
 
 class PhotoGalleryViewer1: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
-    
-    /*
-    @IBAction func gobacktotimestamplist(_ sender: Any) {
-        performSegue(withIdentifier: "gobacktotime", sender: self)
-
-    }
-    */
-    
     @IBOutlet weak var collectionView: UICollectionView!
     static var pathname = String()
     var documentsUrl: URL {
@@ -31,9 +23,6 @@ class PhotoGalleryViewer1: UIViewController, UICollectionViewDataSource, UIColle
         super.viewDidLoad()
         collectionView.dataSource = self;
         collectionView.delegate = self
-
-        //let myurl = docsurl.appendingPathComponent(PhotoGalleryViewer1.pathname)
-        //let myurl = URL(string: PhotoGalleryViewer1.pathname)
         var myurl = NSURL.fileURL(withPath: PhotoGalleryViewer1.pathname)
         var urlString: String = PhotoGalleryViewer1.pathname
         
@@ -81,13 +70,11 @@ class PhotoGalleryViewer1: UIViewController, UICollectionViewDataSource, UIColle
     // MARK: UICollectionViewDataSource
     
      func numberOfSections(in collectionView: UICollectionView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
         return 1
     }
     
     
      func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of items
         return images.count
     }
     

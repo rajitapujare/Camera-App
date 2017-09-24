@@ -144,46 +144,6 @@ class ViewController: UIViewController, AVCapturePhotoCaptureDelegate {
  
 }
     
-    /*
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        self.sessionQueue.async {
-            switch self.setupResult {
-            case .success:
-                // Only setup observers and start the session running if setup succeeded.
-                self.addObservers()
-                self.session.startRunning()
-                self.isSessionRunning = self.session.isRunning
-            case .cameraNotAuthorized:
-                DispatchQueue.main.async {
-                    let message = NSLocalizedString("AVCamManual doesn't have permission to use the camera, please change privacy settings", comment: "Alert message when the user has denied access to the camera" )
-                    let alertController = UIAlertController(title: "AVCamManual", message: message, preferredStyle: .alert)
-                    let cancelAction = UIAlertAction(title: NSLocalizedString("OK", comment: "Alert OK button"), style: .cancel, handler: nil)
-                    alertController.addAction(cancelAction)
-                    // Provide quick access to Settings.
-                    let settingsAction = UIAlertAction(title: NSLocalizedString("Settings", comment: "Alert button to open Settings"), style: .default) {action in
-                        if #available(iOS 10.0, *) {
-                            UIApplication.shared.open(URL(string: UIApplicationOpenSettingsURLString)!)
-                        } else {
-                            UIApplication.shared.openURL(URL(string: UIApplicationOpenSettingsURLString)!)
-                        }
-                    }
-                    alertController.addAction(settingsAction)
-                    self.present(alertController, animated: true, completion: nil)
-                }
-            case .sessionConfigurationFailed:
-                DispatchQueue.main.async {
-                    let message = NSLocalizedString("Unable to capture media", comment: "Alert message when something goes wrong during capture session configuration")
-                    let alertController = UIAlertController(title: "AVCamManual", message: message, preferredStyle: .alert)
-                    let cancelAction = UIAlertAction(title: NSLocalizedString("OK", comment: "Alert OK button"), style: .cancel, handler: nil)
-                    alertController.addAction(cancelAction)
-                    self.present(alertController, animated: true, completion: nil)
-                }
-            }
-        }
-    }
- */
 
 @IBAction func changeHUD(_ sender: Any) {
     
@@ -313,92 +273,6 @@ private func configureManualHUD() {
     
     }
     
-/*
-private func set(_ slider: UISlider, highlight color: UIColor) {
-        slider.tintColor = color
-        
-        if slider === self.focusPositionSlider {
-            self.positionLabel.textColor = slider.tintColor
-            self.focusPositionValue.textColor = slider.tintColor
-        } else if slider === self.exposureDurationSlider {
-            self.durationLabel.textColor = slider.tintColor
-            self.exposureDurationValue.textColor = slider.tintColor
-        } else if slider === self.exposureISOSlider {
-            self.isoLabel.textColor = slider.tintColor
-            self.exposureISOValue.textColor = slider.tintColor
-        } else if slider === self.whitebalanceTemperatureSlider {
-            self.temperatureLabel.textColor = slider.tintColor
-            self.temperatureValue.textColor = slider.tintColor
-        } else if slider === self.whitebalanceTintSlider {
-            self.tintLabel.textColor = slider.tintColor
-            self.tintValue.textColor = slider.tintColor
-        }
-    }
-
-@IBAction func sliderTouchBegan(_ slider: UISlider) {
-        self.set(slider, highlight: UIColor(red: 0.0, green: 122.0/255.0, blue: 1.0, alpha: 1.0))
-    }
-    
-@IBAction func sliderTouchEnded(_ slider: UISlider) {
-        self.set(slider, highlight: UIColor.gray)
-    }
- */ /*
-private func configureSession() {
-        guard self.setupResult == .success else {
-            return
-        }
-        
-        self.session?.beginConfiguration()
-        
-        self.session?.sessionPreset = AVCaptureSessionPresetPhoto
-
-
-        DispatchQueue.main.async {
-            self.configureManualHUD()
-        }
-    }
-
-    @available(iOS 10.0, *)
-    private func currentPhotoSettings() -> AVCapturePhotoSettings? {
-        guard let stillImageOutput = self.stillImageOutput else {
-            return nil
-        }
-        var photoSettings: AVCapturePhotoSettings? = nil
-        
-        if stillImageOutput.isLensStabilizationDuringBracketedCaptureSupported {
-            let bracketedSettings: [AVCaptureBracketedStillImageSettings]
-                bracketedSettings = [AVCaptureManualExposureBracketedStillImageSettings.manualExposureSettings(withExposureDuration: AVCaptureExposureDurationCurrent, iso: AVCaptureISOCurrent)]
-            
-            if !stillImageOutput.availableRawPhotoPixelFormatTypes.isEmpty {
-                photoSettings = AVCapturePhotoBracketSettings(rawPixelFormatType: stillImageOutput.availableRawPhotoPixelFormatTypes[0].uint32Value, processedFormat: nil, bracketedSettings: bracketedSettings)
-            } else {
-                photoSettings = AVCapturePhotoBracketSettings(rawPixelFormatType: 0, processedFormat: [AVVideoCodecKey: AVVideoCodecJPEG], bracketedSettings: bracketedSettings)
-            }
-            
-            (photoSettings as! AVCapturePhotoBracketSettings).isLensStabilizationEnabled = true
-        } else {
-            if !stillImageOutput.availableRawPhotoPixelFormatTypes.isEmpty {
-                photoSettings = AVCapturePhotoSettings(rawPixelFormatType: stillImageOutput.availableRawPhotoPixelFormatTypes[0].uint32Value, processedFormat: [AVVideoCodecKey : AVVideoCodecJPEG])
-            } else {
-                photoSettings = AVCapturePhotoSettings()
-            }
-            
-                photoSettings?.flashMode = stillImageOutput.supportedFlashModes.contains(AVCaptureFlashMode.auto.rawValue as NSNumber) ? .auto : .off
-            
-        }
-        
-        if !(photoSettings?.availablePreviewPhotoPixelFormatTypes.isEmpty ?? true) {
-            photoSettings?.previewPhotoFormat = [kCVPixelBufferPixelFormatTypeKey as String: photoSettings!.availablePreviewPhotoPixelFormatTypes[0]]
-        }
-        
-        photoSettings?.isAutoStillImageStabilizationEnabled = true
-        
-        
-        photoSettings?.isHighResolutionPhotoEnabled = true
-        
-        return photoSettings
-    }
-    */
     @IBAction func changeLensPosition(_ control: UISlider) {
         
         do {
@@ -479,12 +353,6 @@ private func configureSession() {
     }
     private func normalizedGains(_ gains: AVCaptureWhiteBalanceGains) -> AVCaptureWhiteBalanceGains {
         var g = gains
-/*
-        var incandescentLightCompensation = 3_000
-        var tint = 0 // no shift
-        let tempAndTintValues = AVCaptureWhiteBalanceTemperatureAndTintValues(temperature: Float(incandescentLightCompensation), tint: Float(tint))
-        g = (device1?.deviceWhiteBalanceGains(for: tempAndTintValues))!
-*/
  
         g.redGain = max(1.0, g.redGain)
         g.greenGain = max(1.0, g.greenGain)
@@ -525,8 +393,6 @@ private func configureSession() {
         
         
         whiteImage.image = UIImage(named: "white")
-
-        //timer = Timer.scheduledTimer(timeInterval: 0.3, target: self, selector: #selector(delayedAction), userInfo: nil, repeats: false)
     }
     
     func photoOutput(_ output: AVCapturePhotoOutput,
